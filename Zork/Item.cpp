@@ -13,24 +13,25 @@ Item::Item() {
 }
 Item::Item(xml_node<>* itemNode){
 
-	xml_node<>* node = itemNode->first_node();
-		for(node = itemNode->first_node(); node; node = node->next_sibling){
-			if(node->name() == "name"){}
+	xml_node<>* node;
+		for(node = itemNode->first_node(); node; node = node->next_sibling())
+		{
+			/*if(node->name() == "name"){}
 			else if(node->name() == "status"){}
 			else if(node->name() == "writing"){}
 			else if(node->name() == "turnon"){}
 
-		}
+		*/}
 }
 
 Item::~Item() {
 	// TODO Auto-generated destructor stub
 }
-void setUp(xml_node<> *){
+void Item::setUp(xml_node<> *){
 
 
 }
-void turnOn(xml_node<> *){
+void Item::turnOn(xml_node<> *){
 
 }
 
