@@ -1,0 +1,40 @@
+/*
+ * Item.h
+ *
+ *  Created on: Oct 29, 2017
+ *      Author: millerev
+ */
+
+#ifndef ITEM_H_
+#define ITEM_H_
+
+#include "rapidxml.hpp"
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+#include <stdio.h>
+
+using namespace std;
+using namespace rapidxml;
+
+class Item {
+public:
+	Item();
+	Item(xml_node<>* node);
+	virtual ~Item();
+
+	string name = ""; //Item name
+	string descrption = ""; //Item description
+	string writing = ""; //writing
+
+	vector<string> onMessages; //Messages when the item is used
+	vector<string> turnOnActions; //Actions available for the item
+
+	void setUp(xml_node<> *);
+	void turnOn(xml_node<> *);
+
+};
+
+#endif /* ITEM_H_ */
