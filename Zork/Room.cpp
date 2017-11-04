@@ -11,6 +11,7 @@ Room::Room() {
 	// TODO Auto-generated constructor stub
 
 }
+
 Room::Room(xml_node<>* roomNode){
 	xml_node<>* node = roomNode->first_node();
 
@@ -29,6 +30,7 @@ Room::Room(xml_node<>* roomNode){
 Room::~Room() {
 	// TODO Auto-generated destructor stub
 }
+
 bool Room::hasItem(string i){
 	for (std::list<string>::iterator it=items.begin(); it!=items.end(); ++it){
 		cout << "item found: " << i << endl;
@@ -36,11 +38,13 @@ bool Room::hasItem(string i){
 	}
 	cout << "item not found: " << i << endl;
 	return false;
-
-
 }
 void Room::evalTriggers(){
 
+}
+
+void Room::getBorders(){
+    
 }
 
 

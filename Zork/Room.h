@@ -38,6 +38,7 @@ public:
 
 	bool hasItem(string i);
 	void evalTriggers();
+    void getBorders();
 
 };
 
