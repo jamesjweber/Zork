@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		19A165471F8B54BF00002AB3 /* ByersHouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A165451F8B54BF00002AB3 /* ByersHouse.cpp */; };
-		19A1654B1F8B560800002AB3 /* World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A165491F8B560800002AB3 /* World.cpp */; };
-		19DC135F1F7BFF2600E154FC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19DC135E1F7BFF2600E154FC /* main.cpp */; };
-		19DC136A1F7C023E00E154FC /* Move.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19DC13681F7C023E00E154FC /* Move.cpp */; };
-		19DC136D1F7C068700E154FC /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19DC136B1F7C068700E154FC /* Command.cpp */; };
-		19DC13701F7C111B00E154FC /* Help.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19DC136E1F7C111B00E154FC /* Help.cpp */; };
-		19DC13731F7C127600E154FC /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19DC13711F7C127600E154FC /* Input.cpp */; };
+		19D0D97A1FAE843800B81844 /* Borders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9671FAE843600B81844 /* Borders.cpp */; };
+		19D0D97B1FAE843800B81844 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D96C1FAE843700B81844 /* Item.cpp */; };
+		19D0D97C1FAE843800B81844 /* Input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D96D1FAE843700B81844 /* Input.cpp */; };
+		19D0D97D1FAE843800B81844 /* Room.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9711FAE843700B81844 /* Room.cpp */; };
+		19D0D97E1FAE843800B81844 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9771FAE843800B81844 /* main.cpp */; };
+		19D0D97F1FAE843800B81844 /* zork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9781FAE843800B81844 /* zork.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,21 +28,27 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		19A165451F8B54BF00002AB3 /* ByersHouse.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ByersHouse.cpp; sourceTree = "<group>"; };
-		19A165461F8B54BF00002AB3 /* ByersHouse.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ByersHouse.hpp; sourceTree = "<group>"; };
-		19A165481F8B554800002AB3 /* Headers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Headers.h; sourceTree = "<group>"; };
-		19A165491F8B560800002AB3 /* World.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = World.cpp; sourceTree = "<group>"; };
-		19A1654A1F8B560800002AB3 /* World.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = World.hpp; sourceTree = "<group>"; };
+		19D0D9601FAE843600B81844 /* Zork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zork.h; sourceTree = "<group>"; };
+		19D0D9671FAE843600B81844 /* Borders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Borders.cpp; sourceTree = "<group>"; };
+		19D0D9681FAE843600B81844 /* World Descriptors&Objs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "World Descriptors&Objs"; sourceTree = "<group>"; };
+		19D0D9691FAE843700B81844 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Room.h; sourceTree = "<group>"; };
+		19D0D96A1FAE843700B81844 /* rapidxml_utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidxml_utils.hpp; sourceTree = "<group>"; };
+		19D0D96B1FAE843700B81844 /* Input.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
+		19D0D96C1FAE843700B81844 /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
+		19D0D96D1FAE843700B81844 /* Input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
+		19D0D96E1FAE843700B81844 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		19D0D96F1FAE843700B81844 /* rapidxml-1.13 2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "rapidxml-1.13 2"; sourceTree = "<group>"; };
+		19D0D9701FAE843700B81844 /* Charachters */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Charachters; sourceTree = "<group>"; };
+		19D0D9711FAE843700B81844 /* Room.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Room.cpp; sourceTree = "<group>"; };
+		19D0D9721FAE843800B81844 /* Zork */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Zork; sourceTree = "<group>"; };
+		19D0D9731FAE843800B81844 /* Borders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Borders.h; sourceTree = "<group>"; };
+		19D0D9741FAE843800B81844 /* Commands */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Commands; sourceTree = "<group>"; };
+		19D0D9751FAE843800B81844 /* rapidxml_print.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidxml_print.hpp; sourceTree = "<group>"; };
+		19D0D9761FAE843800B81844 /* rapidxml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rapidxml.hpp; sourceTree = "<group>"; };
+		19D0D9771FAE843800B81844 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		19D0D9781FAE843800B81844 /* zork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = zork.cpp; sourceTree = "<group>"; };
+		19D0D9791FAE843800B81844 /* sample.txt.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sample.txt.xml; sourceTree = "<group>"; };
 		19DC135B1F7BFF2600E154FC /* Zork */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Zork; sourceTree = BUILT_PRODUCTS_DIR; };
-		19DC135E1F7BFF2600E154FC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		19DC13681F7C023E00E154FC /* Move.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Move.cpp; sourceTree = "<group>"; };
-		19DC13691F7C023E00E154FC /* Move.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Move.hpp; sourceTree = "<group>"; };
-		19DC136B1F7C068700E154FC /* Command.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Command.cpp; sourceTree = "<group>"; };
-		19DC136C1F7C068700E154FC /* Command.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Command.hpp; sourceTree = "<group>"; };
-		19DC136E1F7C111B00E154FC /* Help.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Help.cpp; sourceTree = "<group>"; };
-		19DC136F1F7C111B00E154FC /* Help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Help.hpp; sourceTree = "<group>"; };
-		19DC13711F7C127600E154FC /* Input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Input.cpp; sourceTree = "<group>"; };
-		19DC13721F7C127600E154FC /* Input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Input.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,38 +62,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		19A165401F8B4FF800002AB3 /* Commands */ = {
-			isa = PBXGroup;
-			children = (
-				19A165481F8B554800002AB3 /* Headers.h */,
-				19DC13681F7C023E00E154FC /* Move.cpp */,
-				19DC13691F7C023E00E154FC /* Move.hpp */,
-				19DC136E1F7C111B00E154FC /* Help.cpp */,
-				19DC136F1F7C111B00E154FC /* Help.hpp */,
-				19DC136B1F7C068700E154FC /* Command.cpp */,
-				19DC136C1F7C068700E154FC /* Command.hpp */,
-			);
-			path = Commands;
-			sourceTree = "<group>";
-		};
-		19A165411F8B523600002AB3 /* World Descriptors&Objs */ = {
-			isa = PBXGroup;
-			children = (
-				19A165491F8B560800002AB3 /* World.cpp */,
-				19A1654A1F8B560800002AB3 /* World.hpp */,
-				19A165451F8B54BF00002AB3 /* ByersHouse.cpp */,
-				19A165461F8B54BF00002AB3 /* ByersHouse.hpp */,
-			);
-			path = "World Descriptors&Objs";
-			sourceTree = "<group>";
-		};
-		19A1654C1F8B574800002AB3 /* Charachters */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Charachters;
-			sourceTree = "<group>";
-		};
 		19DC13521F7BFF2600E154FC = {
 			isa = PBXGroup;
 			children = (
@@ -108,12 +81,26 @@
 		19DC135D1F7BFF2600E154FC /* Zork */ = {
 			isa = PBXGroup;
 			children = (
-				19A1654C1F8B574800002AB3 /* Charachters */,
-				19A165411F8B523600002AB3 /* World Descriptors&Objs */,
-				19A165401F8B4FF800002AB3 /* Commands */,
-				19DC13711F7C127600E154FC /* Input.cpp */,
-				19DC13721F7C127600E154FC /* Input.hpp */,
-				19DC135E1F7BFF2600E154FC /* main.cpp */,
+				19D0D9671FAE843600B81844 /* Borders.cpp */,
+				19D0D9731FAE843800B81844 /* Borders.h */,
+				19D0D9701FAE843700B81844 /* Charachters */,
+				19D0D9741FAE843800B81844 /* Commands */,
+				19D0D96D1FAE843700B81844 /* Input.cpp */,
+				19D0D96B1FAE843700B81844 /* Input.hpp */,
+				19D0D96C1FAE843700B81844 /* Item.cpp */,
+				19D0D96E1FAE843700B81844 /* Item.h */,
+				19D0D9771FAE843800B81844 /* main.cpp */,
+				19D0D9751FAE843800B81844 /* rapidxml_print.hpp */,
+				19D0D96A1FAE843700B81844 /* rapidxml_utils.hpp */,
+				19D0D96F1FAE843700B81844 /* rapidxml-1.13 2 */,
+				19D0D9761FAE843800B81844 /* rapidxml.hpp */,
+				19D0D9711FAE843700B81844 /* Room.cpp */,
+				19D0D9691FAE843700B81844 /* Room.h */,
+				19D0D9791FAE843800B81844 /* sample.txt.xml */,
+				19D0D9681FAE843600B81844 /* World Descriptors&Objs */,
+				19D0D9721FAE843800B81844 /* Zork */,
+				19D0D9781FAE843800B81844 /* zork.cpp */,
+				19D0D9601FAE843600B81844 /* Zork.h */,
 			);
 			path = Zork;
 			sourceTree = "<group>";
@@ -175,13 +162,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19A165471F8B54BF00002AB3 /* ByersHouse.cpp in Sources */,
-				19A1654B1F8B560800002AB3 /* World.cpp in Sources */,
-				19DC136A1F7C023E00E154FC /* Move.cpp in Sources */,
-				19DC136D1F7C068700E154FC /* Command.cpp in Sources */,
-				19DC13701F7C111B00E154FC /* Help.cpp in Sources */,
-				19DC135F1F7BFF2600E154FC /* main.cpp in Sources */,
-				19DC13731F7C127600E154FC /* Input.cpp in Sources */,
+				19D0D97C1FAE843800B81844 /* Input.cpp in Sources */,
+				19D0D97B1FAE843800B81844 /* Item.cpp in Sources */,
+				19D0D97D1FAE843800B81844 /* Room.cpp in Sources */,
+				19D0D97E1FAE843800B81844 /* main.cpp in Sources */,
+				19D0D97A1FAE843800B81844 /* Borders.cpp in Sources */,
+				19D0D97F1FAE843800B81844 /* zork.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
