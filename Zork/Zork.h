@@ -9,18 +9,10 @@
 #define ZORK_H_
 
 #include "rapidxml.hpp"
-
-class Item;
-class Containter;
-class Trigger;
-class Room;
-class Creature;
-
-
-#include <string>;
-#include <map>;
-#include <queue>;
-#include <vector>;
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 using namespace rapidxml;
@@ -32,11 +24,11 @@ public:
 
 
 	string userInput;
-	map<string, Item*> inventory;
-	map<string, Item*> items;
-	map<string , Room*> rooms;
-	map<string, Creature*> creatures;
-	map<string, Trigger*> triggers;
+	map<string, xml_node<>*> inventory;
+	map<string, xml_node<>*> items;
+	map<string , xml_node<>*> rooms;
+	map<string, xml_node<>*> creatures;
+	map<string, xml_node<>*> triggers;
 
 	void setUpGame(string);
 	void StartGame();

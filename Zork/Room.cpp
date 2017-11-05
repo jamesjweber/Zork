@@ -15,8 +15,10 @@ Room::Room(xml_node<>* roomNode){
 	xml_node<>* node = roomNode->first_node();
 
 	for(node = roomNode->first_node(); node; node = node->next_sibling()){
-		/*if(node->name() == "name"){}
-		else if(node->name() == "item"){}
+		if(node->name() == "border"){
+
+		}
+		/*else if(node->name() == "item"){}
 		else if(node->name() == "container"){
 
 		}
@@ -40,6 +42,9 @@ bool Room::hasItem(string i){
 
 }
 void Room::evalTriggers(){
+
+}
+void Room::getBorders(xml_node<>* borderNode){
 
 }
 

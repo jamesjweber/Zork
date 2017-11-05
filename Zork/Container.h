@@ -11,22 +11,25 @@
 #include <string>
 #include <vector>
 #include "Item.h"
+#include "rapidxml.hpp"
 
-class Accept;
-class Trigger;
+//class Trigger;
 
 using namespace std;
+using namespace rapidxml;
 
 class Container {
 public:
 	Container();
+	Container(xml_node<>* containerNode);
 	virtual ~Container();
+
 	string name;
 	string status;
 	string description;
-	vector<Accept> accepts;
+	vector<string> accepts;
 	vector<Item> items;
-    vector<Trigger> triggers;
+    //vector<Trigger> triggers;
 
     bool hasItem(string item);
     void checkTriggers();

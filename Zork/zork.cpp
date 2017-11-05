@@ -6,29 +6,25 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-#include "rapidxml.hpp"
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <iterator>
-#include <vector>
-
+#include "zork.h"
 
 using namespace std;
 using namespace rapidxml;
 
-void getSibling(xml_node<>* node);
+Zork::Zork(){
 
-void setUpGame(string){}
-void StartGame(){}
-void checkTriggers(){}
-void evalInput(string){}
-void parseAction(string){}
-void getSibling(xml_node<>* root){
+}
+void Zork::getSibling(xml_node<>* node);
+void Zork::setUpGame(string){}
+void Zork::StartGame(){}
+void Zork::checkTriggers(){}
+void Zork::evalInput(string){}
+void Zork::parseAction(string){}
+void Zork::getSibling(xml_node<>* root){
 
 	xml_node<> * node;
-	for(node = root->first_node(); node; node = node ->next_sibling()){
-		cout << node->name() << endl;
+	for(node = root->first_node(); node; node = node ->next_sibling())
+	{
+		std::cout << node->name() << endl;
 	}
 }

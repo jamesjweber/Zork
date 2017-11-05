@@ -19,6 +19,7 @@
 //class Trigger;
 //class Creature;
 //class Borders;
+#include "Borders.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -33,12 +34,12 @@ public:
 	list<string> items;
 	//list<Container> containers;
 	//list<Trigger> triggers;
-	//list<Borders> borders;
+	map<string, string> borders;
 	//list<Creature> creatures;
 
 	bool hasItem(string i);
 	void evalTriggers();
-
+	void getBorders(xml_node<>* borderNode);
 };
 
 #endif /* ROOM_H_ */
