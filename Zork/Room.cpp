@@ -16,14 +16,14 @@ Room::Room(xml_node<>* roomNode){
 	xml_node<>* node = roomNode->first_node();
 
 	for(node = roomNode->first_node(); node; node = node->next_sibling()){
-		/*if(node->name() == "name"){}
-		else if(node->name() == "item"){}
-		else if(node->name() == "container"){
-
-		}
-		else if(node->name() == "border"){}
-		else if(node->name() == "creature"){}
-	*/}
+        string tag = node->name();
+        
+        if(tag.compare("name") == 0){}
+		else if(tag.compare("item") == 0){}
+		else if(tag.compare("container") == 0){}
+        else if(tag.compare("border") == 0){getBorders(node);}
+		else if(tag.compare("creature") == 0){}
+	}
 
 }
 
@@ -32,7 +32,7 @@ Room::~Room() {
 }
 
 bool Room::hasItem(string i){
-	for (std::list<string>::iterator it=items.begin(); it!=items.end(); ++it){
+	for (std::list<string>::iterator it=items.begin(); it!=items.end(); it++){
 		cout << "item found: " << i << endl;
 		return true;
 	}
@@ -43,7 +43,11 @@ void Room::evalTriggers(){
 
 }
 
-void Room::getBorders(){
+void Room::getBorders(xml_node<> * borderNode){
+    xml_node<> * borderName = borderNode->first_node("name");
+    xml_node<> * borderDir = borderNode->first_node("direction");
+    cout << borderName->value() << " " <<borderDir->value() << endl;
+    borders[borderDir->value()] = borderName->value();
     
 }
 

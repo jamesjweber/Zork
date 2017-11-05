@@ -8,6 +8,7 @@
 #ifndef ROOM_H_
 #define ROOM_H_
 #include "rapidxml.hpp"
+#include "Borders.h"
 #include <iostream>
 #include <list>
 #include <string>
@@ -33,12 +34,12 @@ public:
 	list<string> items;
 	//list<Container> containers;
 	//list<Trigger> triggers;
-	//list<Borders> borders;
+	map<string,string> borders;
 	//list<Creature> creatures;
 
 	bool hasItem(string i);
 	void evalTriggers();
-    void getBorders();
+    void getBorders(xml_node<> *);
 
 };
 
