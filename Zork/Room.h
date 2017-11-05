@@ -9,6 +9,9 @@
 #define ROOM_H_
 #include "rapidxml.hpp"
 #include "Borders.h"
+#include "Item.h"
+#include "Container.h"
+//#include "Creature.h"
 #include <iostream>
 #include <list>
 #include <string>
@@ -27,21 +30,25 @@ using namespace rapidxml;
 class Room {
 public:
 	Room();
-	Room(xml_node<>* roomNode);
+	Room(xml_node<>* roomNode, map<string, xml_node<> *>,map<string, xml_node<> *>,map<string, xml_node<> *>);
 	virtual ~Room();
 
 	string name;
-	list<string> items;
-	//list<Container> containers;
-	//list<Trigger> triggers;
+    string description;
+	list<Item *> itemObj;
+	list<Container *> containerObj;
 	map<string,string> borders;
-	//list<Creature> creatures;
+	//list<Creature *> creatures;
+    //list<Trigger> triggers;
 
 	bool hasItem(string i);
 	void evalTriggers();
     void getName(xml_node<> *);
+    void getDescription(xml_node<> *);
     void getItems(xml_node<> *);
+    void getContainers(xml_node<> *);
     void getBorders(xml_node<> *);
+    //void getCreature(xml_node<> *);
 };
 
 #endif /* ROOM_H_ */

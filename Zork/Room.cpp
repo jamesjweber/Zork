@@ -12,15 +12,16 @@ Room::Room() {
 
 }
 
-Room::Room(xml_node<>* roomNode){
+Room::Room(xml_node<>* roomNode, map<string, xml_node<> *> item, map<string, xml_node<> *> container, map<string, xml_node<> *> creature){
 	xml_node<>* node = roomNode->first_node();
 
 	for(node = roomNode->first_node(); node; node = node->next_sibling()){
         string tag = node->name();
         
         if(tag.compare("name") == 0){getName(node);}
-		else if(tag.compare("item") == 0){}
-		else if(tag.compare("container") == 0){}
+        else if(tag.compare("description") == 0){getDescription(node);}
+        else if(tag.compare("item") == 0){getItems(node);}
+        else if(tag.compare("container") == 0){getContainers(node);}
         else if(tag.compare("border") == 0){getBorders(node);}
 		else if(tag.compare("creature") == 0){}
 	}
@@ -46,15 +47,35 @@ void Room::evalTriggers(){
 
 void Room::getName(xml_node<> * nameNode){
     name = nameNode->value();
-    cout << name << endl;
+    cout << "Room - " << name << endl;
+}
+
+void Room::getDescription(xml_node<> * descriptionNode){
+    description = descriptionNode->value();
+    cout << " Description - " << description << endl;
 }
 
 void Room::getItems(xml_node<> * itemNode){
-    
+    cout << " Item - " <<itemNode->value() << endl;
+    Item * i = new Item();
+    itemObj.push_back(i);
+}
+
+void Room::getContainers(xml_node<> * containerNode){
+    cout << " Container - " << containerNode->value() << endl;
+    Container * c = new Container();
+    containerObj.push_back(c);
 }
 
 void Room::getBorders(xml_node<> * borderNode){
     xml_node<> * borderName = borderNode->first_node("name");
     xml_node<> * borderDir = borderNode->first_node("direction");
+    cout << "   Border - "<<borderNode->first_node("name")->value() << " : " << borderNode->first_node("direction")->value() << endl;
     borders[borderDir->value()] = borderName->value();
 }
+
+/*void Room::getCreatures(xml_node<> * creatureNode){
+    cout << creatureNode->value() << endl;
+    Creature * c = new Creature();
+    creatureObj.push_back(c);
+} */
