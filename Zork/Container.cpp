@@ -29,7 +29,7 @@ Container::Container(xml_node<>* containerNode){
 			description = child->value();
 		}
 		else if(tag.compare("status") == 0){
-			description = child->value();
+			status = child->value();
 		}
 		else if(tag.compare("accept") == 0){
 			accepts.push_back(child->value());

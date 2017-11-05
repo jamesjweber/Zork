@@ -16,12 +16,28 @@ Item::Item(xml_node<>* itemNode){
 	xml_node<>* node;
 		for(node = itemNode->first_node(); node; node = node->next_sibling())
 		{
-			/*if(node->name() == "name"){}
-			else if(node->name() == "status"){}
-			else if(node->name() == "writing"){}
-			else if(node->name() == "turnon"){}
+			string tag = node->name();
+	        if(tag.compare("name") == 0){
+	        	name = node->value();
+	        }
+			else if(tag.compare("writing") == 0){
+				writing = node->value();
+			}
+			else if(tag.compare("status") == 0){
+				status = node->value();
+			}
+			else if(tag.compare("description") == 0){
+				description = node->value();
+			}
+	        else if(tag.compare("turnon") == 0){
 
-		*/}
+	        }
+	        else if(tag.compare("trigger") == 0){
+
+	        }
+
+
+		}
 }
 
 Item::~Item() {
