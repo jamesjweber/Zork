@@ -25,9 +25,10 @@ public:
 	Item(xml_node<>* node);
 	virtual ~Item();
 
-	string name = ""; //Item name
-	string descrption = ""; //Item description
-	string writing = ""; //writing
+	string name; //Item name
+	string description; //Item description
+	string writing; //writing
+	string status;
 
 	vector<string> onMessages; //Messages when the item is used
 	vector<string> turnOnActions; //Actions available for the item
