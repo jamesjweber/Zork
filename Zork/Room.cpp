@@ -23,7 +23,7 @@ Room::Room(xml_node<>* roomNode, map<string, xml_node<> *> item, map<string, xml
         else if(tag.compare("item") == 0){getItems(node);}
         else if(tag.compare("container") == 0){getContainers(node);}
         else if(tag.compare("border") == 0){getBorders(node);}
-		else if(tag.compare("creature") == 0){}
+        else if(tag.compare("creature") == 0){getCreatures(node);}
 	}
 
 }
@@ -74,8 +74,8 @@ void Room::getBorders(xml_node<> * borderNode){
     borders[borderDir->value()] = borderName->value();
 }
 
-/*void Room::getCreatures(xml_node<> * creatureNode){
-    cout << creatureNode->value() << endl;
+void Room::getCreatures(xml_node<> * creatureNode){
+    cout << " Creature - " << creatureNode->value() << endl;
     Creature * c = new Creature();
     creatureObj.push_back(c);
-} */
+}

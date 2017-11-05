@@ -11,7 +11,7 @@
 #include "Borders.h"
 #include "Item.h"
 #include "Container.h"
-//#include "Creature.h"
+#include "Creature.h"
 #include <iostream>
 #include <list>
 #include <string>
@@ -38,7 +38,7 @@ public:
 	list<Item *> itemObj;
 	list<Container *> containerObj;
 	map<string,string> borders;
-	//list<Creature *> creatures;
+	list<Creature *> creatureObj;
     //list<Trigger> triggers;
 
 	bool hasItem(string i);
@@ -48,7 +48,7 @@ public:
     void getItems(xml_node<> *);
     void getContainers(xml_node<> *);
     void getBorders(xml_node<> *);
-    //void getCreature(xml_node<> *);
+    void getCreatures(xml_node<> *);
 };
 
 #endif /* ROOM_H_ */
