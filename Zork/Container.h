@@ -28,7 +28,7 @@ public:
 	string status;
 	string description;
 	vector<string> accepts;
-	vector<Item> items;
+	vector<Item*> items;
     //vector<Trigger> triggers;
 
     bool hasItem(string item);

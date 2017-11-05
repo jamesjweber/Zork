@@ -35,7 +35,7 @@ Container::Container(xml_node<>* containerNode){
 			accepts.push_back(child->value());
 		}
 		else if(tag.compare("item") == 0){
-			Item i = new Item(child);
+			Item* i = new Item(child);
 			items.push_back(i);
 		}
 		else if(tag.compare("trigger") == 0){
