@@ -46,9 +46,7 @@ void Room::evalTriggers(){
 void Room::getBorders(xml_node<> * borderNode){
     xml_node<> * borderName = borderNode->first_node("name");
     xml_node<> * borderDir = borderNode->first_node("direction");
-    cout << borderName->value() << " " <<borderDir->value() << endl;
     borders[borderDir->value()] = borderName->value();
-    
 }
 
 
