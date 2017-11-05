@@ -9,35 +9,48 @@
 #define ZORK_H_
 
 #include "rapidxml.hpp"
-#include <iostream>
+
+/*class Item;
+class Containter;
+class Trigger;
+class Room;
+class Creature; */
+
+
 #include <string>
-#include <vector>
 #include <map>
+#include <queue>
+#include <vector>
 
 using namespace std;
 using namespace rapidxml;
 
 class Zork {
 public:
-	Zork();
+	Zork(string s);
 	virtual ~Zork();
 
-
 	string userInput;
-	map<string, xml_node<>*> inventory;
-	map<string, xml_node<>*> items;
-	map<string , xml_node<>*> rooms;
-	map<string, xml_node<>*> creatures;
-	map<string, xml_node<>*> triggers;
+	/* map<string, Item*> inventory;
+	map<string, Item*> items;
+	map<string , Room*> rooms;
+	map<string, Creature*> creatures;
+	map<string, Trigger*> triggers; */
 
-	void setUpGame(string);
+	xml_node<> * setUpGame(string s);
+    void makeMap(xml_node<> * mapNode);
 	void StartGame();
 	void checkTriggers();
 	void evalInput(string);
 	void parseAction(string);
 	void getSibling(xml_node<>* root);
-
-
+private:
+    xml_node<> * mapNode;
+    map<string, xml_node<> *> room;
+    map<string, xml_node<> *> item;
+    map<string, xml_node<> *> container;
+    map<string, xml_node<> *> creature;
 };
 
 #endif /* ZORK_H_ */
+>>>>>>> fefe4840c22b5136bb72612ca6977cfedbbceffb
