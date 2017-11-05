@@ -39,8 +39,9 @@ public:
 
 	bool hasItem(string i);
 	void evalTriggers();
+    void getName(xml_node<> *);
+    void getItems(xml_node<> *);
     void getBorders(xml_node<> *);
-
 };
 
 #endif /* ROOM_H_ */

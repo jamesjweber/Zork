@@ -78,8 +78,24 @@ void Zork::makeMap(xml_node<> * mapNode) {
 }
 
 void Zork::StartGame(){
+    
     //Create and iterator
     map<string,xml_node<> *>::iterator it;
+    //Set the iterator to the beginning of the map
+    for(it = room.begin(); it != room.end(); it++)
+    {
+        Room * r = new Room(it->second);
+        roomObj.push_back(r);
+    }
+    
+    list<Room *>::iterator itr;
+    
+    for(itr = roomObj.begin(); itr != roomObj.end(); itr++){
+        
+    }
+    
+    //Create and iterator
+    /* map<string,xml_node<> *>::iterator it;
     //Set the iterator to the beginning of the map
     for(it = room.begin(); it != room.end(); it++)
     {
@@ -96,7 +112,7 @@ void Zork::StartGame(){
     for(it = creature.begin(); it != creature.end(); it++)
     {
         cout << it->first << " : " << it->second->name() << endl;
-    }
+    } */
 }
 void checkTriggers(){}
 void evalInput(string){}

@@ -16,11 +16,12 @@ class Trigger;
 class Room;
 class Creature; */
 
-
+#include <list>
 #include <string>
 #include <map>
 #include <queue>
 #include <vector>
+#include "Room.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -50,6 +51,7 @@ private:
     map<string, xml_node<> *> item;
     map<string, xml_node<> *> container;
     map<string, xml_node<> *> creature;
+    list<Room *> roomObj;
 };
 
 #endif /* ZORK_H_ */
