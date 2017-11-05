@@ -6,7 +6,7 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include "zork.h"
+#include "Zork.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -27,12 +27,12 @@ Zork::~Zork() {
 }
 
 void Zork::getSibling(xml_node<>* root){
-
-	xml_node<> * node;
-	for(node = root->first_node(); node; node = node ->next_sibling())
-	{
-		std::cout << node->name() << endl;
-	}
+    
+    xml_node<> * node;
+    for(node = root->first_node(); node; node = node ->next_sibling())
+    {
+        std::cout << node->name() << endl;
+    }
 }
 xml_node<> * Zork::setUpGame(string s){
     xml_document<> doc;
@@ -45,10 +45,10 @@ xml_node<> * Zork::setUpGame(string s){
     doc.parse<0>(&buffer[0]);
     
     xml_node<> * root = doc.first_node();
-
-    /*
     
-    */
+    /*
+     
+     */
     
     return (root);
 }
@@ -84,7 +84,7 @@ void Zork::StartGame(){
     //Set the iterator to the beginning of the map
     for(it = room.begin(); it != room.end(); it++)
     {
-        Room * r = new Room(it->second);
+        Room * r = new Room(it->second, item, container, creature);
         roomObj.push_back(r);
     }
     
@@ -96,25 +96,24 @@ void Zork::StartGame(){
     
     //Create and iterator
     /* map<string,xml_node<> *>::iterator it;
-    //Set the iterator to the beginning of the map
-    for(it = room.begin(); it != room.end(); it++)
-    {
-        cout << it->first << " : " << it->second->name() << endl;
-    }
-    for(it = item.begin(); it != item.end(); it++)
-    {
-        cout << it->first << " : " << it->second->name() << endl;
-    }
-    for(it = container.begin(); it != container.end(); it++)
-    {
-        cout << it->first << " : " << it->second->name() << endl;
-    }
-    for(it = creature.begin(); it != creature.end(); it++)
-    {
-        cout << it->first << " : " << it->second->name() << endl;
-    } */
+     //Set the iterator to the beginning of the map
+     for(it = room.begin(); it != room.end(); it++)
+     {
+     cout << it->first << " : " << it->second->name() << endl;
+     }
+     for(it = item.begin(); it != item.end(); it++)
+     {
+     cout << it->first << " : " << it->second->name() << endl;
+     }
+     for(it = container.begin(); it != container.end(); it++)
+     {
+     cout << it->first << " : " << it->second->name() << endl;
+     }
+     for(it = creature.begin(); it != creature.end(); it++)
+     {
+     cout << it->first << " : " << it->second->name() << endl;
+     } */
 }
 void checkTriggers(){}
 void evalInput(string){}
 void parseAction(string){}
-
