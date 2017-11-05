@@ -48,6 +48,3 @@ void Room::getBorders(xml_node<> * borderNode){
     xml_node<> * borderDir = borderNode->first_node("direction");
     borders[borderDir->value()] = borderName->value();
 }
-
-
->>>>>>> fefe4840c22b5136bb72612ca6977cfedbbceffb
