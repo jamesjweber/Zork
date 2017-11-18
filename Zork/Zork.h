@@ -42,9 +42,11 @@ public:
     void makeMap(xml_node<> * mapNode);
 	void StartGame();
 	void checkTriggers();
-	void evalInput(string);
+	bool evalInput(string);
 	void parseAction(string);
-	void getSibling(xml_node<>* root);
+	void getSibling(xml_node<>*);
+    void loadCurrentRoom(Room *);
+    void getInput(void);
 private:
     xml_node<> * mapNode;
     map<string, xml_node<> *> room;
@@ -52,6 +54,8 @@ private:
     map<string, xml_node<> *> container;
     map<string, xml_node<> *> creature;
     list<Room *> roomObj;
+    list<string> inputs;
+    Room * currentRoom;
 };
 
 #endif /* ZORK_H_ */
