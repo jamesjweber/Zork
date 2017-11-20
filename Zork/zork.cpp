@@ -84,7 +84,9 @@ void Zork::StartGame(){
     //Set the iterator to the beginning of the map
     for(it = room.begin(); it != room.end(); it++)
     {
-        Room * r = new Room(it->second, item, container, creature);
+        //Room * r = new Room(it->second, item, container, creature);
+    	Room* r = nodeToRoom(it->second);
+
         roomObj.push_back(r);
     }
     
@@ -114,6 +116,80 @@ void Zork::StartGame(){
      cout << it->first << " : " << it->second->name() << endl;
      } */
 }
+
+Room* Zork::nodeToRoom(xml_node<>* roomNode){
+
+	//Room * r = new Room(it->second, item, container, creature);
+
+	Room *r = new Room(); //Start with a default room object
+
+	//xml_node<>* node = roomNode->first_node();
+
+
+	xml_node<>* node; //roomNode is already passed in
+
+
+	//NOTE: Common approach
+	//	1. set the room field to a string (i.e. name, description)
+	//	2. Look up the right object node, make that object, add it to the
+	//	   list of objects in the room:
+	//	   example:
+	//     SomeObject* o = nodeToSomeObject(map[node->value()]);
+	//	   objectList.push_back(o);
+
+	//     		- map[node->value()] returns an xml_node<>*
+	//			-nodeToSomeObject takes a node, makes a new object
+	//			-Lastly, push the object onto the room list
+	// 3.  Go through the xml_node (i.e. borders)
+
+
+	for(node = roomNode->first_node(); node; node = node->next_sibling())
+	{
+        string tag = node->name();
+
+        if(tag.compare("name") == 0){
+        	r->name = node->value();
+
+        }
+        else if(tag.compare("description") == 0){
+        	r->description = node->value();
+        }
+        else if(tag.compare("item") == 0){
+        	Item* i = nodeToItem(item[node->value()]);
+        	r->itemObj.push_back(i);
+        }
+        else if(tag.compare("container") == 0){
+        	Container* c = nodeToContainer(container[node->value()]);
+        	r->containerObj.push_back(c);
+        }
+        else if(tag.compare("border") == 0){
+        	xml_node<> * borderName = node->first_node("name");
+        	xml_node<> * borderDir = node->first_node("direction");
+        	cout << "   Border - "<<node->first_node("name")->value() << " : " << node->first_node("direction")->value() << endl;
+        	r->borders[borderDir->value()] = borderName->value();
+        }
+        else if(tag.compare("creature") == 0){
+        	Creature* c = nodeToCreature(container[node->value()]);
+        	r->creatureObj.push_back(c);
+        }
+	}
+	return r;
+
+}
+
+Item* Zork::nodeToItem(xml_node<>* containerNode){
+	Item* i = new Item();
+	return i;
+}
+Container* Zork::nodeToContainer(xml_node<>* containerNode){
+	Container* c = new Container();
+	return c;
+}
+Creature* Zork::nodeToCreature(xml_node<>* containerNode){
+	Creature* c = new Creature();
+	return c;
+}
+
 void checkTriggers(){}
 void evalInput(string){}
 void parseAction(string){}

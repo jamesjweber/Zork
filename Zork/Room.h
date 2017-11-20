@@ -49,6 +49,7 @@ public:
     void getContainers(xml_node<> *);
     void getBorders(xml_node<> *);
     void getCreatures(xml_node<> *);
+
 };
 
 #endif /* ROOM_H_ */

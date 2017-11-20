@@ -45,6 +45,14 @@ public:
 	void evalInput(string);
 	void parseAction(string);
 	void getSibling(xml_node<>* root);
+
+	Room* nodeToRoom(xml_node<>* roomNode);
+	Item* nodeToItem(xml_node<>* itemNode);
+	Creature* nodeToCreature(xml_node<>* creatureNode);
+	Container* nodeToContainer(xml_node<>* containerNode);
+	//Trigger* nodeToTrigger(xml_node<>* tiggerNode);
+
+
 private:
     xml_node<> * mapNode;
     map<string, xml_node<> *> room;
