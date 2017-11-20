@@ -56,14 +56,16 @@ void Room::getDescription(xml_node<> * descriptionNode){
 }
 
 void Room::getItems(xml_node<> * itemNode){
-    //cout << " Item - " <<itemNode->value() << endl;
-    Item * i = new Item();
+    cout << " Item - " <<itemNode->value() << endl;
+    Item * i = new Item(itemNode);
+    i->name = itemNode->value();
     itemObj.push_back(i);
+    printItems();
 }
 
 void Room::getContainers(xml_node<> * containerNode){
     //cout << " Container - " << containerNode->value() << endl;
-    Container * c = new Container();
+    Container * c = new Container(containerNode);
     containerObj.push_back(c);
 }
 
@@ -76,6 +78,14 @@ void Room::getBorders(xml_node<> * borderNode){
 
 void Room::getCreatures(xml_node<> * creatureNode){
     //cout << " Creature - " << creatureNode->value() << endl;
-    Creature * c = new Creature();
+    Creature * c = new Creature(creatureNode);
     creatureObj.push_back(c);
+}
+
+void Room::printItems(void){
+    list<Item *>::iterator itr;
+    for(itr = itemObj.begin(); itr != itemObj.end(); itr++){
+        Item * item = *itr;
+        cout << item->name << endl;
+    }
 }

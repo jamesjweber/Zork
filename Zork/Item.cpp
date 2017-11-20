@@ -14,11 +14,13 @@ Item::Item() {
 Item::Item(xml_node<>* itemNode){
 
 	xml_node<>* node;
+    cout << "item is being created" << endl;
 		for(node = itemNode->first_node(); node; node = node->next_sibling())
 		{
 			string tag = node->name();
 	        if(tag.compare("name") == 0){
 	        	name = node->value();
+                cout << name << endl;
 	        }
 			else if(tag.compare("writing") == 0){
 				writing = node->value();
@@ -35,8 +37,6 @@ Item::Item(xml_node<>* itemNode){
 	        else if(tag.compare("trigger") == 0){
 
 	        }
-
-
 		}
 }
 
