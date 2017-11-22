@@ -84,7 +84,9 @@ void Zork::StartGame(){
     //Set the iterator to the beginning of the map
     for(it = room.begin(); it != room.end(); it++)
     {
-        Room * r = new Room(it->second, item, container, creature);
+        //Room * r = new Room(it->second, item, container, creature);
+    	Room* r = nodeToRoom(it->second);
+
         roomObj.push_back(r);
     }
     
