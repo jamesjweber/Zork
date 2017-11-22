@@ -3,7 +3,7 @@
  *
  *  Created on: Oct 29, 2017
  *      Author: Evan Miller
- */ 
+ */
 
 #include "Item.h"
 

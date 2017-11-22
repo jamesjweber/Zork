@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 11, 2017
  *      Author: millerev
- */ 
+ */
 
 #ifndef ZORK_CONDITION_H_
 #define ZORK_CONDITION_H_

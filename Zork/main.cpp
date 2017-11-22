@@ -14,7 +14,7 @@ using namespace rapidxml;
 
 int main(int argc, const char * argv[])
 {
-    Zork * game = new Zork("/Users/jamesweber/Documents/Zork/Zork/sample.txt.xml");
+    Zork * game = new Zork("/Users/jamesweber/Documents/Zork/Zork/Zork/sample.txt.xml");
 
     // James  -  /Users/jamesweber/Desktop/Xcode/Zork/Zork/sample.txt.xml
     //           /Users/jamesweber/Documents/Zork/Zork/Zork/sample.txt.xml

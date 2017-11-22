@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 5, 2017
  *      Author: millerev
- */ 
+ */
 
 #ifndef ZORK_CREATURE_H_
 #define ZORK_CREATURE_H_

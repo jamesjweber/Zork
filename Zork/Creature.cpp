@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 5, 2017
  *      Author: millerev
- */ 
+ */
 
 #include "Creature.h"
 

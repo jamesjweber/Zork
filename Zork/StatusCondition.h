@@ -4,7 +4,7 @@
  *  Created on: Nov 20, 2017
  *      Author: millerev
  */
- 
+
 #ifndef ZORK_STATUSCONDITION_H_
 #define ZORK_STATUSCONDITION_H_
 

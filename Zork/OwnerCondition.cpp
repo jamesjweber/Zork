@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 20, 2017
  *      Author: millerev
- */ 
+ */
 
 #include "OwnerCondition.h"
 
