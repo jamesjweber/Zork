@@ -3,7 +3,7 @@
  *
  *  Created on: Nov 20, 2017
  *      Author: millerev
- */
+ */ 
 
 #ifndef ZORK_OWNERCONDITION_H_
 #define ZORK_OWNERCONDITION_H_

@@ -4,7 +4,7 @@
  *  Created on: Nov 11, 2017
  *      Author: millerev
  */
-
+ 
 #include "Trigger.h"
 
 using namespace std;

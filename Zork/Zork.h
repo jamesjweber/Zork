@@ -30,7 +30,7 @@ class Zork {
 public:
 	Zork(string s);
 	virtual ~Zork();
-
+ 
 	string userInput;
 	/* map<string, Item*> inventory;
 	map<string, Item*> items;

@@ -49,7 +49,7 @@ void Room::getName(xml_node<> * nameNode){
     name = nameNode->value();
     cout << "Room - " << name << endl;
 }
-
+ 
 void Room::getDescription(xml_node<> * descriptionNode){
     description = descriptionNode->value();
     cout << " Description - " << description << endl;
