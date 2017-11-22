@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19A4E93C1FC5598B00E54770 /* OwnerCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9351FC5598900E54770 /* OwnerCondition.cpp */; };
+		19A4E93D1FC5598B00E54770 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9361FC5598A00E54770 /* Condition.cpp */; };
+		19A4E93E1FC5598B00E54770 /* Trigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9381FC5598A00E54770 /* Trigger.cpp */; };
+		19A4E93F1FC5598B00E54770 /* StatusCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E93B1FC5598A00E54770 /* StatusCondition.cpp */; };
 		19D0D97A1FAE843800B81844 /* Borders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9671FAE843600B81844 /* Borders.cpp */; };
 		19D0D97B1FAE843800B81844 /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D96C1FAE843700B81844 /* Item.cpp */; };
 		19D0D97D1FAE843800B81844 /* Room.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19D0D9711FAE843700B81844 /* Room.cpp */; };
@@ -29,6 +33,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		19A4E9341FC5598900E54770 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
+		19A4E9351FC5598900E54770 /* OwnerCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OwnerCondition.cpp; sourceTree = "<group>"; };
+		19A4E9361FC5598A00E54770 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Condition.cpp; sourceTree = "<group>"; };
+		19A4E9371FC5598A00E54770 /* StatusCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusCondition.h; sourceTree = "<group>"; };
+		19A4E9381FC5598A00E54770 /* Trigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Trigger.cpp; sourceTree = "<group>"; };
+		19A4E9391FC5598A00E54770 /* Trigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trigger.h; sourceTree = "<group>"; };
+		19A4E93A1FC5598A00E54770 /* OwnerCondition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OwnerCondition.h; sourceTree = "<group>"; };
+		19A4E93B1FC5598A00E54770 /* StatusCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StatusCondition.cpp; sourceTree = "<group>"; };
 		19D0D9601FAE843600B81844 /* Zork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zork.h; sourceTree = "<group>"; };
 		19D0D9671FAE843600B81844 /* Borders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Borders.cpp; sourceTree = "<group>"; };
 		19D0D9691FAE843700B81844 /* Room.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Room.h; sourceTree = "<group>"; };
@@ -79,21 +91,29 @@
 		19DC135D1F7BFF2600E154FC /* Zork */ = {
 			isa = PBXGroup;
 			children = (
-				19D0D9861FAF9FC900B81844 /* Creature.cpp */,
-				19D0D9871FAF9FC900B81844 /* Creature.h */,
 				19D0D9671FAE843600B81844 /* Borders.cpp */,
 				19D0D9731FAE843800B81844 /* Borders.h */,
+				19A4E9361FC5598A00E54770 /* Condition.cpp */,
+				19A4E9341FC5598900E54770 /* Condition.h */,
 				19D0D9841FAF6FBD00B81844 /* Container.cpp */,
 				19D0D9831FAF6FBD00B81844 /* Container.h */,
+				19D0D9861FAF9FC900B81844 /* Creature.cpp */,
+				19D0D9871FAF9FC900B81844 /* Creature.h */,
 				19D0D96C1FAE843700B81844 /* Item.cpp */,
 				19D0D96E1FAE843700B81844 /* Item.h */,
 				19D0D9771FAE843800B81844 /* main.cpp */,
+				19A4E9351FC5598900E54770 /* OwnerCondition.cpp */,
+				19A4E93A1FC5598A00E54770 /* OwnerCondition.h */,
 				19D0D9751FAE843800B81844 /* rapidxml_print.hpp */,
 				19D0D96A1FAE843700B81844 /* rapidxml_utils.hpp */,
 				19D0D9761FAE843800B81844 /* rapidxml.hpp */,
 				19D0D9711FAE843700B81844 /* Room.cpp */,
 				19D0D9691FAE843700B81844 /* Room.h */,
 				19D0D9791FAE843800B81844 /* sample.txt.xml */,
+				19A4E93B1FC5598A00E54770 /* StatusCondition.cpp */,
+				19A4E9371FC5598A00E54770 /* StatusCondition.h */,
+				19A4E9381FC5598A00E54770 /* Trigger.cpp */,
+				19A4E9391FC5598A00E54770 /* Trigger.h */,
 				19D0D9781FAE843800B81844 /* zork.cpp */,
 				19D0D9601FAE843600B81844 /* Zork.h */,
 			);
@@ -159,11 +179,15 @@
 			files = (
 				19D0D9881FAF9FC900B81844 /* Creature.cpp in Sources */,
 				19D0D97B1FAE843800B81844 /* Item.cpp in Sources */,
+				19A4E93D1FC5598B00E54770 /* Condition.cpp in Sources */,
 				19D0D97D1FAE843800B81844 /* Room.cpp in Sources */,
 				19D0D97E1FAE843800B81844 /* main.cpp in Sources */,
 				19D0D97A1FAE843800B81844 /* Borders.cpp in Sources */,
+				19A4E93C1FC5598B00E54770 /* OwnerCondition.cpp in Sources */,
 				19D0D97F1FAE843800B81844 /* zork.cpp in Sources */,
 				19D0D9851FAF6FBD00B81844 /* Container.cpp in Sources */,
+				19A4E93E1FC5598B00E54770 /* Trigger.cpp in Sources */,
+				19A4E93F1FC5598B00E54770 /* StatusCondition.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
