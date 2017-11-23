@@ -90,13 +90,18 @@ void Zork::StartGame(){
         roomObj.push_back(r);
     }
     
-    list<Room *>::iterator itr;
+    // Sets current room as first room (Entrance)
+    std::list<Room *>::iterator itr = roomObj.begin();
+    currentRoom = *itr; //cout << currentRoom->name << endl;
     
-    for(itr = roomObj.begin(); itr != roomObj.end(); itr++){
-        
+    loadCurrentRoom(currentRoom);
+    
+    /* Gets inputs and evaluates them word by word */
+    int i = 0;
+    while(i++ < 200) {
+        getInput();
+        evalInput(inputs);
     }
-    
-    
     
     //Create and iterator
     /* map<string,xml_node<> *>::iterator it;
@@ -123,7 +128,7 @@ Room* Zork::nodeToRoom(xml_node<>* roomNode){
 
 	//Room * r = new Room(it->second, item, container, creature);
 
-	Room *r = new Room(); //Start with a default room object
+	Room * r = new Room(); //Start with a default room object
 
 	//xml_node<>* node = roomNode->first_node();
 
@@ -151,28 +156,32 @@ Room* Zork::nodeToRoom(xml_node<>* roomNode){
 
         if(tag.compare("name") == 0){
         	r->name = node->value();
-
+            // cout << "name - " << node->value() << endl;
         }
         else if(tag.compare("description") == 0){
         	r->description = node->value();
+            // cout << " description - " << node->value() << endl;
         }
         else if(tag.compare("item") == 0){
         	Item* i = nodeToItem(item[node->value()]);
         	r->itemObj.push_back(i);
+            // cout << "  item - " << node->value() << endl;
         }
         else if(tag.compare("container") == 0){
         	Container* c = nodeToContainer(container[node->value()]);
         	r->containerObj.push_back(c);
+            // cout << "    container - " << node->value() << endl;
         }
         else if(tag.compare("border") == 0){
         	xml_node<> * borderName = node->first_node("name");
         	xml_node<> * borderDir = node->first_node("direction");
-        	cout << "   Border - "<<node->first_node("name")->value() << " : " << node->first_node("direction")->value() << endl;
+        	// cout << "   Border - "<<node->first_node("name")->value() << " : " << node->first_node("direction")->value() << endl;
         	r->borders[borderDir->value()] = borderName->value();
         }
         else if(tag.compare("creature") == 0){
         	Creature* c = nodeToCreature(container[node->value()]);
         	r->creatureObj.push_back(c);
+            //cout << "    creature - " << node->value() << endl;
         }
 	}
 	return r;
@@ -192,6 +201,93 @@ Creature* Zork::nodeToCreature(xml_node<>* containerNode){
 	return c;
 }
 
-void checkTriggers(){}
-void evalInput(string){}
-void parseAction(string){}
+void Zork::getInput(){
+    int i = 0;
+    int wordStart = 0; //index to keep track of beginning of words
+    string input;
+    string word;
+    string space = " ";
+    cout << ">> ";
+    getline(cin, input);
+    
+    // Split up words -----------------------------------
+    while(i != input.length()){
+        if(input[i] == space[0]){
+            word = input.substr(wordStart,i-wordStart);
+            wordStart = i + 1;
+            inputs.push_back(word);
+        }
+        i++;
+    }
+    word = input.substr(wordStart,i-wordStart);
+    inputs.push_back(word);
+    // ---------------------------------------------------
+}
+
+bool Zork::evalInput(list<string> input){
+    
+    list<string>::iterator it;
+    string s;
+    bool valid = false;
+    for(it = input.begin(); it != input.end(); it++){
+        s = *it;
+        if(s == "help"){
+            cout << "∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆\n"
+            "----------------------------- LIST OF ZORK COMMANDS -----------------------------\n"
+            "∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇\n\n"
+            "[n,s,e,w] - Movement commands\n"
+            "[i] - Shows the player's inventory\n"
+            "[take] (item) - Allows a user to take an item from an inventory\n"
+            "[open] (container) - Prints the contents of an inventory\n"
+            "[read] (item) - Prints whatever is written on an object\n"
+            //"[drop] (tim) - Drops Tim Dotson from Beta Theta Pi\n"
+            "[drop] (item) - Drop item from inventory into current rooom\n"
+            "[put] (item) in (container) - Adds the item to the conatiner's inventory\n"
+            "[turn on] (item) - Activates item\n"
+            "[attack] (creature) with (item) - Pretty self explanatory, it will do as it says\n"
+            ""<< endl;
+            valid = true;
+        }
+        if(s == "n" | s == "north"){
+            cout << endl;
+            valid = true;
+        }
+        if(s == "s" | s == "south"){
+            cout << endl;
+            valid = true;
+        }
+        if(s == "e" | s == "east"){
+            cout << endl;
+            valid = true;
+        }
+        if(s == "w" | s == "west"){
+            cout << endl;
+            valid = true;
+        }
+        if(s == "i"){
+            printInventory();
+            valid = true;
+        }
+        if(s == "take"){
+            //it++;
+            //s = *it;
+            //currentRoom->printItems();
+            cout << "This doesn't work, don't mess with it" << endl;
+        }
+    }
+    return valid;
+}
+
+void Zork::parseAction(string){}
+
+void Zork::loadCurrentRoom(Room * room){
+    cout << room->description << endl << endl;
+}
+
+void Zork::printInventory(void){
+    list<string>::iterator it;
+    cout << endl;
+    for(it = inventory.begin(); it != inventory.end(); it++){
+        cout << *it << endl;
+    }
+}
