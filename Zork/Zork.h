@@ -42,7 +42,7 @@ public:
     void makeMap(xml_node<> * mapNode);
 	void StartGame();
 	void checkTriggers();
-	bool evalInput(list<string> input);
+	bool evalInput(string, string);
 	void parseAction(string);
 	void getSibling(xml_node<>* root);
     void loadCurrentRoom(Room *);
@@ -63,8 +63,11 @@ private:
     map<string, xml_node<> *> container;
     map<string, xml_node<> *> creature;
     list<Room *> roomObj;
+    list<Item *> itemObj;
+    list<Container *> containerObj;
+    list<Creature *> creatureObj;
     list<string> inputs;
-    list<string> inventory;
+    list<Item *> inventory;
     Room * currentRoom;
 };
 
