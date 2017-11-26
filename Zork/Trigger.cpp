@@ -66,6 +66,7 @@ bool Trigger::evalCommands(string input){
 		return false;
 	}
 }
+
 bool Trigger::evalConditions(){
 
 	return true;

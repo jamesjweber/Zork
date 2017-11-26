@@ -43,7 +43,7 @@ Item::~Item() {
 }
 void Item::setUp(xml_node<> *){
 
-
+    
 }
 void Item::turnOn(xml_node<> *){
 
