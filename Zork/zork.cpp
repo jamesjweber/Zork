@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <string>
 #include <iterator>
 #include <vector>
 #include <list>
@@ -20,6 +21,7 @@ Zork::Zork(string filename) {
     mapNode = setUpGame(filename);
     makeMap(mapNode);
     StartGame();
+
 }
 
 Zork::~Zork() {
@@ -60,77 +62,108 @@ void Zork::makeMap(xml_node<> * mapNode) {
         
         if(tag.compare("room") == 0){
             //cout << "room" << endl;
-            room[node->first_node("name")->value()] = node;
+            room_xml[node->first_node("name")->value()] = node;
         }
         else if (tag.compare("item") == 0){
             //cout << "item" << endl;
-            item[node->first_node("name")->value()] = node;
+            item_xml[node->first_node("name")->value()] = node;
         }
         else if (tag.compare("container") == 0){
             //cout << "container" << endl;
-            container[node->first_node("name")->value()] = node;
+            container_xml[node->first_node("name")->value()] = node;
         }
         else if (tag.compare("creature") == 0) {
             //cout << "creature" << endl;
-            creature[node->first_node("name")->value()] = node;
+            creature_xml[node->first_node("name")->value()] = node;
         }
     }
+}
+
+void Zork::StartGame(){
     
     //Create and iterator
     map<string,xml_node<> *>::iterator it;
     //Set the iterator to the beginning of the map
-    for(it = room.begin(); it != room.end(); it++)
+    for(it = room_xml.begin(); it != room_xml.end(); it++)
     {
-        Room * r = nodeToRoom(it->second);
-        roomObj.push_back(r);
-    }
-    for(it = item.begin(); it != item.end(); it++){
-        Item * i = new Item(item[it->first]);
-        itemObj.push_back(i);
-    }
-    for(it = container.begin(); it != container.end(); it++){
-        Container * c = new Container();
-        containerObj.push_back(c);
-    }
-    for(it = creature.begin(); it != creature.end(); it++){
-        Creature * cr = new Creature();
-        creatureObj.push_back(cr);
+        //Room * r = new Room(it->second, item, container, creature);
+        Room* r = nodeToRoom(it->second);
+        cout << r->description << endl;
+        cout << r->name << endl;
+        roomObjs[string(r->name)] = r;
     }
     
-}
-
-void Zork::StartGame(){
-
     // Sets current room as first room (Entrance)
-    std::list<Room *>::iterator itr = roomObj.begin();
-    currentRoom = *itr; //cout << currentRoom->name << endl;
-    
-    loadCurrentRoom(currentRoom);
+    currentRoom = roomObjs.begin()->second; //cout << currentRoom->name << endl;
     
     /* Gets inputs and evaluates them word by word */
     int i = 0;
+    bool valid = false;
     while(i++ < 200) {
+        if(i > 1){
+            if(!valid){
+                cout << "Your statement could not be interpreted" << endl;
+            }
+        }
+        valid = false;
         getInput();
         list<string>::iterator it;
         string s;
         for(it = inputs.begin(); it != inputs.end(); it++){
             s = *it;
+            if(s == "quit" || s == "end"){
+                i = 200;
+            }
             if(it == inputs.begin()){
-                evalInput(s,"");
+                valid += evalInput(s,"");
             } else {
-                evalInput(s, *(--it));
+                valid += evalInput(s, *(--it));
                 it++; // corrects for --it above, otherwise infinite loop
             }
         }
-        
     }
 }
+
+/*void Zork::StartGame(){
+    
+    // Sets current room as first room (Entrance)
+    std::list<string, Room *>::iterator itr = roomObjs.begin();
+    currentRoom = *itr; //cout << currentRoom->name << endl;
+    
+    loadCurrentRoom(currentRoom); */
+    
+    /* Gets inputs and evaluates them word by word */
+    /* int i = 0;
+    bool valid = false;
+    while(i++ < 200) {
+        if(i > 1){
+            if(!valid){
+                cout << "Your statement could not be interpreted" << endl;
+            }
+        }
+        getInput();
+        list<string>::iterator it;
+        string s;
+        for(it = inputs.begin(); it != inputs.end(); it++){
+            s = *it;
+            if(s == "quit" || s == "end"){
+                i = 200;
+            }
+            if(it == inputs.begin()){
+                valid += evalInput(s,"");
+            } else {
+                valid += evalInput(s, *(--it));
+                it++; // corrects for --it above, otherwise infinite loop
+            }
+        }
+    }
+} */
 
 Room* Zork::nodeToRoom(xml_node<>* roomNode){
 
 	//Room * r = new Room(it->second, item, container, creature);
 
-	Room * r = new Room(); //Start with a default room object
+	Room *r = new Room(); //Start with a default room object
 
 	//xml_node<>* node = roomNode->first_node();
 
@@ -155,52 +188,165 @@ Room* Zork::nodeToRoom(xml_node<>* roomNode){
 	for(node = roomNode->first_node(); node; node = node->next_sibling())
 	{
         string tag = node->name();
+        cout << tag << endl;
 
         if(tag.compare("name") == 0){
         	r->name = node->value();
-            // cout << "name - " << node->value() << endl;
+        	cout << "Room name: " << r->name << endl;
+        }
+        else if(tag.compare("status") == 0 ){
+        	r->status = node->value();
+        	cout << "Room status: " << r->status << endl;
         }
         else if(tag.compare("description") == 0){
         	r->description = node->value();
-            // cout << " description - " << node->value() << endl;
+        	cout << "Room description: " << r->description << endl;
         }
         else if(tag.compare("item") == 0){
-        	Item* i = nodeToItem(item[node->value()]);
-        	r->itemObj.push_back(i);
-            cout << "  item - " << node->value() << endl;
+        	Item* i = nodeToItem(item_xml[node->value()]);
+        	cout << "Adding item to room:" << i->name << endl;
+        	r->itemObj[i->name] = i;
+        	itemObjs.push_back(i);
+        	gameObjects[string(i->name)] = i;
         }
         else if(tag.compare("container") == 0){
-        	Container* c = nodeToContainer(container[node->value()]);
+        	Container* c = nodeToContainer(container_xml[node->value()]);
+        	cout << "**Adding container to room..." << c->name << endl;
         	r->containerObj.push_back(c);
-            // cout << "    container - " << node->value() << endl;
+        	containerObjs[c->name] = c;
+        	gameObjects[string(c->name)] = c;
         }
         else if(tag.compare("border") == 0){
+
+        	cout << "Adding borders to room..." << endl;
         	xml_node<> * borderName = node->first_node("name");
         	xml_node<> * borderDir = node->first_node("direction");
-        	// cout << "   Border - "<<node->first_node("name")->value() << " : " << node->first_node("direction")->value() << endl;
-        	r->borders[borderDir->value()] = borderName->value();
+        	cout << "   Border - "<<borderName->value() << " : " << borderDir->value() << endl;
+        	string bName = string(borderName->value());
+        	string bDir = string(borderDir->value());
+        	cout << bName << " : " << bDir << endl;
+        	r->borders[bDir] = bName;
         }
         else if(tag.compare("creature") == 0){
-        	Creature* c = nodeToCreature(container[node->value()]);
+        	cout << "Adding creature to room..." << endl;
+        	Creature* c = nodeToCreature(creature_xml[node->value()]);
+
         	r->creatureObj.push_back(c);
-            //cout << "    creature - " << node->value() << endl;
+
+        	creatureObjs.push_back(c);
+        	//gameObjects[string(c->name)] = c;
         }
 	}
 	return r;
 
 }
 
-Item* Zork::nodeToItem(xml_node<>* containerNode){
-	Item* i = new Item(containerNode);
+Item* Zork::nodeToItem(xml_node<>* itemNode){
+	Item* i = new Item();
+	xml_node<>* node;
+	cout << itemNode->first_attribute()<< endl;
+	for(node = itemNode->first_node(); node; node = node->next_sibling())
+	{
+		string tag = node->name();
+		cout << "~"<< node->name() << node->value() << endl;
+		if(tag.compare("name") == 0){
+			i->name = node->value();
+			cout << "item: "<< i->name << endl;
+		}
+		else if(tag.compare("description")==0){
+			i->description = node->value();
+		}
+		else if(tag.compare("writing")==0){
+			i->writing = node->value();
+		}
+		else if(tag.compare("status")){
+			i->status = node->value();
+		}
+		else if(tag.compare("turnon")){
+			xml_node<>* tNode;
+			for(tNode = node->first_node(); tNode; tNode = tNode->next_sibling()){
+				string t = tNode->name();
+				if(t.compare("action") == 0){
+					i->turnOnActions.push_back(tNode->value());
+				}
+				else if(t.compare("message") == 0){
+					i->onMessages.push_back(tNode->value());
+				}
+			}
+		}
+
+	}
 	return i;
 }
+
 Container* Zork::nodeToContainer(xml_node<>* containerNode){
-	Container* c = new Container(containerNode);
+	Container* c = new Container();
+	xml_node<>* node;
+	for(node = containerNode->first_node(); node; node = node->next_sibling())
+	{
+		string tag = node->name();
+		if(tag.compare("name") == 0){
+			c->name = node->value();
+			cout << "Container name: " << c->name << endl;
+		}
+		else if(tag.compare("status") == 0){
+			c->status = node->value();
+			cout << "Container status: " << c->status << endl;
+		}
+		else if(tag.compare("description") == 0){
+			c->description = node->value();
+			cout << "Container description: " << c->description << endl;
+		}
+		else if(tag.compare("accept") == 0){
+			c->accepts.push_back(node->value());
+			cout << "Container accepts... " << endl;
+		}
+		else if(tag.compare("item") == 0){
+
+			Item* item = nodeToItem(node);
+			cout << "Adding Container item: "<< item->name << endl;
+			itemObjs.push_back(item);
+			gameObjects[string(item->name)] = item;
+			c->items[string(item->name)] = item;
+
+		}
+		else if(tag.compare("trigger") == 0){
+			c->triggers.push_back(new Trigger(node));
+		}
+	}
 	return c;
 }
+
 Creature* Zork::nodeToCreature(xml_node<>* creatureNode){
-	Creature* cr = new Creature(creatureNode);
-	return cr;
+    Creature* c = new Creature();
+	xml_node<>* node;
+	for(node = creatureNode->first_node(); node; node = node->next_sibling())
+	{
+        string tag = node->name();
+		if(tag.compare("name")){
+			c->name = node->value();
+		}
+		else if(tag.compare("status")){
+			c->status = node->value();
+		}
+		else if(tag.compare("description")){
+			c->description = node->value();
+		}
+		else if(tag.compare("vulnerability")){
+			c->vulnerability.push_back(node->value());
+		}
+		else if(tag.compare("trigger") == 0){
+			Trigger* t = new Trigger();
+			c->triggers.push_back(t);
+		}
+	}
+	return c;
+}
+Trigger* Zork::nodeToTrigger(xml_node<>* triggerNode){
+	//xml_node<>* node;
+	Trigger* trigger = new Trigger();
+	return trigger;
+
 }
 
 void Zork::getInput(){
@@ -232,6 +378,7 @@ bool Zork::evalInput(string s, string prevS){
     
     bool valid = false;
     if(s == "help"){
+        cout << endl;
         cout << "∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆\n"
         "----------------------------- LIST OF ZORK COMMANDS -----------------------------\n"
         "∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇∇\n\n"
@@ -269,13 +416,22 @@ bool Zork::evalInput(string s, string prevS){
         valid = true;
     }
     
-    for(list<Item *>::iterator itr = currentRoom->itemObj.begin(); itr != currentRoom->itemObj.end(); itr++){
-        for(list<Item *>::iterator it = itemObj.begin(); it != itemObj.end(); it++){
-            if(s == (*itr)->name && s == (*it)->name && prevS == "take"){
-                inventory.push_back(*it);
+    for(auto &i : currentRoom->itemObj){
+        for(auto &j: itemObjs){
+            if(i.second == j && prevS == "take"){
+                inventry.push_back(j);
+                valid = true;
+                goto exit;
             }
         }
     }
+    
+exit:
+    
+    if(s == "quit" || s == "end"){
+        valid = true;
+    }
+    
     return valid;
 }
 
@@ -285,10 +441,11 @@ void Zork::loadCurrentRoom(Room * room){
     cout << room->description << endl << endl;
 }
 
+/* James */
 void Zork::printInventory(void){
     list<Item *>::iterator it;
     cout << endl << "Inventory:" << endl;
-    for(it = inventory.begin(); it != inventory.end(); it++){
+    for(it = inventry.begin(); it != inventry.end(); it++){
         cout << "   " << (*it)->name << endl;
     }
     cout << endl;

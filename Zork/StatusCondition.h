@@ -14,9 +14,11 @@
 class StatusCondition : public Condition {
 public:
 	StatusCondition();
+	StatusCondition(xml_node<>* node);
 	virtual ~StatusCondition();
-	string itemName;
+	string gameObject;
 	string status;
+	bool eval(Zork&);
 };
 
 #endif /* ZORK_STATUSCONDITION_H_ */

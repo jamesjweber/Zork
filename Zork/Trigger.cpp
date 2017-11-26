@@ -29,7 +29,22 @@ Trigger::Trigger(xml_node<>* triggerNode){
         	commands.insert(node->value());
         }
         else if(tag.compare("condition") == 0){
-        	conditions.push_back(new Condition(node));
+        	//conditions.push_back(new Condition(node));
+        	//Check the type of condition...
+        	xml_node<>* cNode;
+        	for(cNode = node->first_node(); cNode; cNode = cNode->next_sibling()){
+        		string tag = node->name();
+        		if(tag.compare("status")){
+        			StatusCondition* c = new StatusCondition(node);
+        			conditions.push_back(c);
+        			break;
+        		}
+        		else if(tag.compare("has")){
+        			OwnerCondition* c = new OwnerCondition(node);
+        			conditions.push_back(c);
+        			break;
+        		}
+        	}
         }
         else if(tag.compare("action") == 0){
         	actions.push_back(node->value());
@@ -37,6 +52,7 @@ Trigger::Trigger(xml_node<>* triggerNode){
         else if(tag.compare("print") == 0){
         	printOuts.push_back(node->value());
         }
+
    }
 
 }

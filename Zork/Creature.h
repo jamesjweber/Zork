@@ -13,20 +13,20 @@
 #include <list>
 #include <vector>
 #include "rapidxml.hpp"
+#include "GameObject.h"
 
 using namespace std;
 using namespace rapidxml;
-class Creature {
+class Creature : public GameObject {
 public:
 	Creature();
 	Creature(xml_node<>* creatureNode);
 	virtual ~Creature();
 	string name;
-	string status;
+	//string status; - in game object
 	string description;
 	list<string> vulnerability;
-	//attack
-	//trigger
+
 	void attack();
 	void checkTriggers();
 

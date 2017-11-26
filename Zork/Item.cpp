@@ -35,8 +35,6 @@ Item::Item(xml_node<>* itemNode){
 	        else if(tag.compare("trigger") == 0){
 
 	        }
-
-
 		}
 }
 

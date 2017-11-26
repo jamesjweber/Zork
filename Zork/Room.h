@@ -15,32 +15,36 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include "GameObject.h"
 
-//Forward Declarations
-//class Item;
-//class Container;
-//class Trigger;
-//class Creature;
-//class Borders;
+class Zork;
 
 using namespace std;
 using namespace rapidxml;
 
-class Room {
+class Room : public GameObject{
 public:
 	Room();
+	Room(xml_node<>*, Zork& z);
 	Room(xml_node<>* roomNode, map<string, xml_node<> *>,map<string, xml_node<> *>,map<string, xml_node<> *>);
 	virtual ~Room();
 
-	string name;
-    string description;
-	list<Item *> itemObj;
+	string name = "default";
+    string description = "default";
+	map<string, Item *> itemObj;
 	list<Container *> containerObj;
-	map<string,string> borders;
 	list<Creature *> creatureObj;
-    //list<Trigger> triggers;
-    
+	map<string,string> borders;
+	//list<Trigger> triggers;
+
+	bool hasItem(string i);
 	void evalTriggers();
+    void getName(xml_node<> *);
+    void getDescription(xml_node<> *);
+    void getItems(xml_node<> *);
+    void getContainers(xml_node<> *);
+    void getBorders(xml_node<> *);
+    void getCreatures(xml_node<> *);
 
 };
 

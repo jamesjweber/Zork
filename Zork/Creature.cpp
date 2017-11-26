@@ -12,7 +12,7 @@ Creature::Creature() {
 
 }
 Creature::Creature(xml_node<>* creatureNode){
-
+    
 }
 
 Creature::~Creature() {

@@ -36,7 +36,7 @@ Container::Container(xml_node<>* containerNode){
 		}
 		else if(tag.compare("item") == 0){
 			Item* i = new Item(child);
-			items.push_back(i);
+			items[i->name] = i;
 		}
 		else if(tag.compare("trigger") == 0){
 			cout << "trigger lmao" << endl;

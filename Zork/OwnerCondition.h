@@ -9,11 +9,19 @@
 #define ZORK_OWNERCONDITION_H_
 
 #include "Condition.h"
+#include <iostream>
+
+using namespace std;
 
 class OwnerCondition: public Condition {
 public:
 	OwnerCondition();
+	OwnerCondition(xml_node<>* ownerNode);
 	virtual ~OwnerCondition();
+	bool has;
+	string owner;
+	string object;
+	bool eval(Zork&);
 };
 
 #endif /* ZORK_OWNERCONDITION_H_ */

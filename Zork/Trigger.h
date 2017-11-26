@@ -10,6 +10,8 @@
 
 #include "rapidxml.hpp"
 #include "Condition.h"
+#include "StatusCondition.h"
+#include "OwnerCondition.h"
 #include "Command.h"
 
 #include <vector>
@@ -23,7 +25,9 @@ public:
 	Trigger();
 	Trigger(xml_node<>* triggerNode);
 	virtual ~Trigger();
+
 	vector<Condition *> conditions;
+
 	set<string> commands;
 	vector<string> actions;
 	vector<string> printOuts;

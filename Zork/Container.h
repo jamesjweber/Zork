@@ -12,23 +12,24 @@
 #include <vector>
 #include "Item.h"
 #include "rapidxml.hpp"
+#include "GameObject.h"
 
 //class Trigger;
 
 using namespace std;
 using namespace rapidxml;
 
-class Container {
+class Container : public GameObject {
 public:
 	Container();
 	Container(xml_node<>* containerNode);
 	virtual ~Container();
 
 	string name;
-	string status;
+	//string status;  - inherited from GameObject
 	string description;
 	vector<string> accepts;
-	vector<Item*> items;
+	map<string, Item*> items;
     //vector<Trigger> triggers;
 
     bool hasItem(string item);
