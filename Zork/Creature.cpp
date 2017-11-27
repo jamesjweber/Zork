@@ -18,9 +18,11 @@ Creature::Creature(xml_node<>* creatureNode){
 Creature::~Creature() {
 	// TODO Auto-generated destructor stub
 }
+
 void Creature::attack(){
 
 }
-void Creature::checkTriggers(){
 
+void Creature::checkTriggers(){
+    
 }

@@ -6,6 +6,7 @@
  */
 
 #include "Command.h"
+#include "Zork.h"
 
 Command::Command() {
 	// TODO Auto-generated constructor stub
@@ -20,8 +21,8 @@ Command::~Command() {
 
 }
 
-bool Command::eval(string s){
-	if(command.empty() or command.compare(s) == 0){
+bool Command::eval(Zork &z){
+	if(command.empty() or command.compare(z.userInput) == 0){
 		return true;
 	}
 	else{

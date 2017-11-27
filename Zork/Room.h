@@ -37,6 +37,7 @@ public:
 	map<string,string> borders;
 	//list<Trigger> triggers;
 
+    void printDescription();
 	bool hasItem(string i);
 	void evalTriggers();
     void getName(xml_node<> *);

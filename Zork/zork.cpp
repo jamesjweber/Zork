@@ -69,7 +69,6 @@ void Zork::makeMap(xml_node<> * mapNode) {
             item_xml[node->first_node("name")->value()] = node;
         }
         else if (tag.compare("container") == 0){
-            //cout << "container" << endl;
             container_xml[node->first_node("name")->value()] = node;
         }
         else if (tag.compare("creature") == 0) {
@@ -88,6 +87,7 @@ void Zork::StartGame(){
     {
         //Room * r = new Room(it->second, item, container, creature);
         Room* r = nodeToRoom(it->second);
+        gameObjects[r->name] = r;
         cout << r->description << endl;
         cout << r->name << endl;
         roomObjs[string(r->name)] = r;
@@ -95,6 +95,7 @@ void Zork::StartGame(){
     
     // Sets current room as first room (Entrance)
     currentRoom = roomObjs.begin()->second; //cout << currentRoom->name << endl;
+    currentRoom->printDescription();
     
     /* Gets inputs and evaluates them word by word */
     int i = 0;
@@ -102,62 +103,29 @@ void Zork::StartGame(){
     while(i++ < 200) {
         if(i > 1){
             if(!valid){
-                cout << "Your statement could not be interpreted" << endl;
+                cout << endl << "Your statement could not be interpreted" << endl;
             }
         }
         valid = false;
         getInput();
-        list<string>::iterator it;
-        string s;
+        vector<string>::iterator it;
         for(it = inputs.begin(); it != inputs.end(); it++){
-            s = *it;
-            if(s == "quit" || s == "end"){
-                i = 200;
+            if(!checkTriggers(true)){
+                if(*it == "quit" || *it == "end"){
+                    i = 200;
+                }
+                if(it == inputs.begin()){
+                    valid += evalInput(*it,"");
+                } else {
+                    valid += evalInput(*it, *(--it));
+                    it++; // corrects for --it above, otherwise infinite loop
+                }
             }
-            if(it == inputs.begin()){
-                valid += evalInput(s,"");
-            } else {
-                valid += evalInput(s, *(--it));
-                it++; // corrects for --it above, otherwise infinite loop
-            }
+            else{valid = true;}
         }
+        checkTriggers(false);
     }
 }
-
-/*void Zork::StartGame(){
-    
-    // Sets current room as first room (Entrance)
-    std::list<string, Room *>::iterator itr = roomObjs.begin();
-    currentRoom = *itr; //cout << currentRoom->name << endl;
-    
-    loadCurrentRoom(currentRoom); */
-    
-    /* Gets inputs and evaluates them word by word */
-    /* int i = 0;
-    bool valid = false;
-    while(i++ < 200) {
-        if(i > 1){
-            if(!valid){
-                cout << "Your statement could not be interpreted" << endl;
-            }
-        }
-        getInput();
-        list<string>::iterator it;
-        string s;
-        for(it = inputs.begin(); it != inputs.end(); it++){
-            s = *it;
-            if(s == "quit" || s == "end"){
-                i = 200;
-            }
-            if(it == inputs.begin()){
-                valid += evalInput(s,"");
-            } else {
-                valid += evalInput(s, *(--it));
-                it++; // corrects for --it above, otherwise infinite loop
-            }
-        }
-    }
-} */
 
 Room* Zork::nodeToRoom(xml_node<>* roomNode){
 
@@ -210,7 +178,7 @@ Room* Zork::nodeToRoom(xml_node<>* roomNode){
         	gameObjects[string(i->name)] = i;
         }
         else if(tag.compare("container") == 0){
-        	Container* c = nodeToContainer(container_xml[node->value()]);
+        	Container * c = nodeToContainer(container_xml[node->value()]);
         	cout << "**Adding container to room..." << c->name << endl;
         	r->containerObj.push_back(c);
         	containerObjs[c->name] = c;
@@ -236,20 +204,25 @@ Room* Zork::nodeToRoom(xml_node<>* roomNode){
         	creatureObjs.push_back(c);
         	//gameObjects[string(c->name)] = c;
         }
+        else if(tag.compare("trigger") == 0){
+            cout << "Adding trigger to room..." << endl;
+            Trigger * t = new Trigger(node);
+            
+            r->triggers.push_back(t);
+        }
 	}
 	return r;
-
 }
 
 Item* Zork::nodeToItem(xml_node<>* itemNode){
 	Item* i = new Item();
 	xml_node<>* node;
-	cout << itemNode->first_attribute()<< endl;
+	// cout << itemNode->first_attribute()<< endl;
 	for(node = itemNode->first_node(); node; node = node->next_sibling())
 	{
 		string tag = node->name();
-		cout << "~"<< node->name() << node->value() << endl;
-		if(tag.compare("name") == 0){
+        cout << "~"<< node->name() << ":" <<node->value() << endl;
+		if(tag.compare("name") == 0 || tag.compare("") == 0){
 			i->name = node->value();
 			cout << "item: "<< i->name << endl;
 		}
@@ -274,7 +247,10 @@ Item* Zork::nodeToItem(xml_node<>* itemNode){
 				}
 			}
 		}
-
+        else if(tag.compare("trigger") == 0){
+            Trigger * t = new Trigger(node);
+            i->triggers.push_back(t);
+        }
 	}
 	return i;
 }
@@ -293,20 +269,16 @@ Container* Zork::nodeToContainer(xml_node<>* containerNode){
 			c->status = node->value();
 			cout << "Container status: " << c->status << endl;
 		}
-		else if(tag.compare("description") == 0){
-			c->description = node->value();
-			cout << "Container description: " << c->description << endl;
-		}
 		else if(tag.compare("accept") == 0){
 			c->accepts.push_back(node->value());
 			cout << "Container accepts... " << endl;
 		}
 		else if(tag.compare("item") == 0){
 
-			Item* item = nodeToItem(node);
+			Item * item = nodeToItem(node);
 			cout << "Adding Container item: "<< item->name << endl;
 			itemObjs.push_back(item);
-			gameObjects[string(item->name)] = item;
+			gameObjects[string(item->name)] = (GameObject *) item;
 			c->items[string(item->name)] = item;
 
 		}
@@ -333,10 +305,10 @@ Creature* Zork::nodeToCreature(xml_node<>* creatureNode){
 			c->description = node->value();
 		}
 		else if(tag.compare("vulnerability")){
-			c->vulnerability.push_back(node->value());
+			c->vulnerability.insert(node->value());
 		}
 		else if(tag.compare("trigger") == 0){
-			Trigger* t = new Trigger();
+			Trigger* t = new Trigger(node);
 			c->triggers.push_back(t);
 		}
 	}
@@ -344,39 +316,236 @@ Creature* Zork::nodeToCreature(xml_node<>* creatureNode){
 }
 Trigger* Zork::nodeToTrigger(xml_node<>* triggerNode){
 	//xml_node<>* node;
-	Trigger* trigger = new Trigger();
+	Trigger* trigger = new Trigger(triggerNode);
 	return trigger;
 
 }
 
 void Zork::getInput(){
-    int i = 0;
-    int wordStart = 0; //index to keep track of beginning of words
     string input;
-    string word;
-    string space = " ";
-    cout << ">> ";
+    cout << endl << ">> ";
     getline(cin, input);
     
+    userInput = input;
+    
     inputs.clear();
+    
+    inputs = split(input);
+}
+
+vector<string> Zork::split(string input){
+    int i = 0;
+    int wordStart = 0; //index to keep track of beginning of words
+    string word;
+    string space = " ";
+    vector<string> inputString;
     
     // Split up words -----------------------------------
     while(i != input.length()){
         if(input[i] == space[0]){
             word = input.substr(wordStart,i-wordStart);
             wordStart = i + 1;
-            inputs.push_back(word);
+            inputString.push_back(word);
         }
         i++;
     }
     word = input.substr(wordStart,i-wordStart);
-    inputs.push_back(word);
+    inputString.push_back(word);
     // ---------------------------------------------------
+    return(inputString);
+}
+
+bool Zork::checkTriggers(bool first_check){
+    vector<Trigger *>::iterator it;
+    vector<string>::iterator actionIterator;
+    vector<string>::iterator printIterator;
+    map<string, Item *>::iterator itemIterator;
+    list<Container *>:: iterator containerIterator;
+    list<Creature *>:: iterator creatureIterator;
+    bool actionDone = false;
+    
+    for(it = currentRoom->triggers.begin(); it != currentRoom->triggers.end(); it++){
+        if((!(*it)->check && first_check) && (*it)->evalConditions(*this)){
+            evalAction((*it)->actions);
+            evalPrint((*it)->printOuts);
+            if(first_check){ (*it)->check = true; }
+            else{ (*it)->check = false; }
+            actionDone = true;
+        }
+        else{
+            (*it)->check = false;
+        }
+    }
+    
+    for(itemIterator = currentRoom->itemObj.begin(); itemIterator != currentRoom->itemObj.end(); itemIterator++){
+        //cout << "checkItemTriggers" << endl;
+        Item * i = itemIterator->second;
+        for(it = i->triggers.begin(); it != i->triggers.end(); it++){
+            if((!(*it)->check && first_check) && (*it)->evalConditions(*this)){
+                evalAction((*it)->actions);
+                evalPrint((*it)->printOuts);
+                if(first_check){ (*it)->check = true; }
+                else{ (*it)->check = false; }
+                actionDone = true;
+            }
+            else{
+                (*it)->check = false;
+            }
+        }
+    }
+    
+    for(containerIterator = currentRoom->containerObj.begin(); containerIterator != currentRoom->containerObj.end(); containerIterator++){
+        //cout << "checkContainerTriggers" << endl;
+        for(it = (*containerIterator)->triggers.begin(); it != (*containerIterator)->triggers.end(); it++){
+            if((!(*it)->check && first_check) && (*it)->evalConditions(*this)){
+                evalAction((*it)->actions);
+                evalPrint((*it)->printOuts);
+                if(first_check){ (*it)->check = true; }
+                else{ (*it)->check = false; }
+                actionDone = true;
+            }
+            else{
+                (*it)->check = false;
+            }
+        }
+    }
+    
+    for(creatureIterator = currentRoom->creatureObj.begin(); creatureIterator != currentRoom->creatureObj.end(); creatureIterator++){
+        for(it = (*creatureIterator)->triggers.begin(); it != (*creatureIterator)->triggers.end(); it++){
+            if((!(*it)->check && first_check) && (*it)->evalConditions(*this)){
+                evalAction((*it)->actions);
+                evalPrint((*it)->printOuts);
+                if(first_check){ (*it)->check = true; }
+                else{ (*it)->check = false; }
+                actionDone = true;
+            }
+            else{
+                (*it)->check = false;
+            }
+        }
+    }
+    
+    //for itemIterator, for triggers in item, check trigger
+    return actionDone;
+}
+
+void Zork::evalPrint(vector<string> print){
+    vector<string>::iterator it;
+    for(it = print.begin(); it != print.end(); it++){
+        cout << (*it) << endl;
+    }
+}
+
+void Zork::evalAction(vector<string> actions){
+    vector<string>::iterator it;
+    vector<string> actionList;
+    for(it = actions.begin(); it != actions.end(); it++){
+        cout << "Action: " << (*it) << endl;
+        actionList = split(*it);
+        if(actionList[0].compare("take") == 0){
+
+            bool isItem = false;
+            
+            vector<Item*>::iterator itemIterator;
+            for(itemIterator = itemObjs.begin(); itemIterator != itemObjs.end(); itemIterator++){
+                if((*itemIterator)->name.compare(actionList[1]) == 0){
+                    isItem = true;
+                    cout << "Item added to inventory: " << actionList[1] << endl;
+                    inventory[(*itemIterator)->name] = (*itemIterator);
+                }
+            }
+            if(isItem == false){
+                cout << "Item not found." << endl;
+            }
+            
+        }
+        else if(actionList[0].compare("attack") == 0){
+            bool isCreature = false;
+            
+            vector<Creature*>::iterator cIt;
+            for(cIt = creatureObjs.begin(); cIt != creatureObjs.end(); cIt++){
+                if((*cIt)->name.compare(actionList[1]) == 0){
+                    isCreature = true;
+                    cout << "You assault the "<< actionList[1] << "with" << actionList[4] << endl;
+                    //Creature -> attack(Item *) ? lmao
+                    
+                }
+            }
+            if(isCreature == false){
+                cout << "Creature not found." << endl;
+            }
+        }
+        else if(actionList[0].compare("Delete") == 0){
+            bool isItem = false;
+            
+            vector<Item*>::iterator iIt;
+            for(iIt = itemObjs.begin(); iIt != itemObjs.end(); iIt++){
+                if((*iIt)->name.compare(actionList[1]) == 0){
+                    isItem = true;
+                    cout << "Removed " << actionList[1] << endl;
+                }
+            }
+            if(isItem == false){
+                cout << "Item not found." << endl;
+            }
+        }
+        else if(actionList[0].compare("Add") == 0){
+            bool isRoom = roomObjs.find(actionList[3]) != roomObjs.end();
+            bool isContainer = containerObjs.find(actionList[3]) != containerObjs.end();
+            
+            
+            vector<Item*>::iterator itemIterator;
+            for(itemIterator = itemObjs.begin(); itemIterator != itemObjs.end(); itemIterator++){
+                if((*itemIterator)->name.compare(actionList[1]) == 0){
+                    if(isContainer){
+                        Container *c = containerObjs.find(actionList[3])->second;
+                        c->items[(*itemIterator)->name] = (*itemIterator);
+                        cout << "Item " <<actionList[1]<< " was added to container " << actionList[3] << endl;
+                    }
+                    if(isRoom){
+                        Room *r = roomObjs.find(actionList[3])->second;
+                        r->itemObj[(*itemIterator)->name] = (*itemIterator);
+                        cout << "Item " <<actionList[1]<< " was added to Room " << actionList[3] << endl;
+                    }
+                    
+                }
+            }
+            vector<Creature*>::iterator cIt;
+            for(cIt= creatureObjs.begin(); cIt != creatureObjs.end(); cIt++){
+                if((*cIt)->name.compare(actionList[1]) == 0){
+                    if(isRoom){
+                        Room *r = roomObjs.find(actionList[3])->second;
+                        r->creatureObj.push_back(*cIt);
+                        cout << "Creature " << actionList[1] << " was added to Room " << actionList[3] << endl;
+                    }
+                }
+            }
+        }
+        else if(actionList[0].compare("Update") == 0){
+            bool isGameObject = gameObjects.find(actionList[1]) != gameObjects.end();
+            if(isGameObject){
+                
+                GameObject *g = gameObjects.find(actionList[1])->second;
+                g->status = actionList[3];
+                cout << "Game Object: " << actionList[1] << " updated to: "<< actionList[3] << endl;
+            }
+        }
+        else if(actionList[0].compare("Game") == 0){
+            if(actionList[1].compare("Over") == 0){
+                //game over
+                cout << "Game over bitches" << endl;
+            }
+        }
+        
+        
+    }
 }
 
 bool Zork::evalInput(string s, string prevS){
     
     bool valid = false;
+    
+    /* * * * * * * * * * * * * * * * * *  HELP  * * * * * * * * * * * * * * * * * */
     if(s == "help"){
         cout << endl;
         cout << "∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆∆\n"
@@ -385,7 +554,7 @@ bool Zork::evalInput(string s, string prevS){
         "[n,s,e,w] - Movement commands\n"
         "[i] - Shows the player's inventory\n"
         "[take] (item) - Allows a user to take an item from an inventory\n"
-        "[open] (container) - Prints the contents of an inventory\n"
+        "[open] (container) - Prints the contents of the container\n"
         "[read] (item) - Prints whatever is written on an object\n"
         //"[drop] (tim) - Drops Tim Dotson from Beta Theta Pi\n"
         "[drop] (item) - Drop item from inventory into current rooom\n"
@@ -395,47 +564,151 @@ bool Zork::evalInput(string s, string prevS){
         ""<< endl;
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  NORTH  * * * * * * * * * * * * * * * * * */
     if(s == "n" | s == "north"){
-        cout << endl;
+        string nextRoom;
+        if(currentRoom->borders.find("north") != currentRoom->borders.end()){
+            nextRoom = currentRoom->borders["north"];
+            cout << endl << "Going to room: " << nextRoom << endl;
+            Room * r = roomObjs.find(nextRoom)->second;
+            currentRoom = r;
+            currentRoom->printDescription();
+        }
+        else{
+            cout << endl << "Can not go this way" << endl;
+        }
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  SOUTH  * * * * * * * * * * * * * * * * * */
     if(s == "s" | s == "south"){
-        cout << endl;
+        string nextRoom;
+        if(currentRoom->borders.find("south") != currentRoom->borders.end()){
+            nextRoom = currentRoom->borders["south"];
+            cout << endl << "Going to room: " << nextRoom << endl;
+            Room * r = roomObjs.find(nextRoom)->second;
+            currentRoom = r;
+            currentRoom->printDescription();
+        }
+        else{
+            cout << endl << "Can not go this way" << endl;
+        }
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  EAST  * * * * * * * * * * * * * * * * * */
     if(s == "e" | s == "east"){
-        cout << endl;
+        string nextRoom;
+        if(currentRoom->borders.find("east") != currentRoom->borders.end()){
+            nextRoom = currentRoom->borders["east"];
+            cout << endl << "Going to room: " << nextRoom << endl;
+            Room * r = roomObjs.find(nextRoom)->second;
+            currentRoom = r;
+            currentRoom->printDescription();
+        }
+        else{
+            cout << endl << "Can not go this way" << endl;
+        }
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  WEST  * * * * * * * * * * * * * * * * * */
     if(s == "w" | s == "west"){
-        cout << endl;
+        string nextRoom;
+        if(currentRoom->borders.find("west") != currentRoom->borders.end()){
+            nextRoom = currentRoom->borders["west"];
+            cout << endl << "Going to room: " << nextRoom << endl;
+            Room * r = roomObjs.find(nextRoom)->second;
+            currentRoom = r;
+            currentRoom->printDescription();
+        }
+        else{
+            cout << endl << "Can not go this way" << endl;
+        }
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * *  INVENTORY  * * * * * * * * * * * * * * * * */
     if(s == "i"){
         printInventory();
         valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     
-    for(auto &i : currentRoom->itemObj){
-        for(auto &j: itemObjs){
-            if(i.second == j && prevS == "take"){
-                inventry.push_back(j);
-                valid = true;
-                goto exit;
+    
+    /* * * * * * * * * * * * * * * * * *  TAKE  * * * * * * * * * * * * * * * * * */
+    if(prevS == "take"){
+        valid = takeObj(s);
+    }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  OPEN  * * * * * * * * * * * * * * * * * */
+    if(prevS == "open"){
+        for(auto &i : currentRoom->containerObj){
+            if(i->name == s){
+                i->printContainer();
             }
         }
+        valid = true;
     }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     
-exit:
     
+    /* * * * * * * * * * * * * * * * * *  READ  * * * * * * * * * * * * * * * * * */
+    if(prevS == "read"){
+        
+    }
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    
+    
+    /* * * * * * * * * * * * * * * * * *  QUIT  * * * * * * * * * * * * * * * * * */
     if(s == "quit" || s == "end"){
         valid = true;
     }
-    
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
     return valid;
 }
 
-void Zork::parseAction(string){}
+void Zork::parseAction(string){
+    
+}
+
+bool Zork::takeObj(string s){
+    bool valid = false;
+    for(auto &i : currentRoom->itemObj){
+            if(i.second->name == s){
+                inventory[i.second->name] = i.second;
+                cout << endl << i.second->name << " was added to your inventory" << endl;
+                valid = true;
+                return valid;
+            }
+    }
+
+    for(auto &i : currentRoom->containerObj){
+        map<string,Item *>::iterator it;
+        for(it = i->items.begin(); it != i->items.end(); it++){
+            if((*it).second->name == s){
+                inventory[(*it).second->name] = (*it).second;
+                cout << endl << (*it).second->name << " was added to your inventory" << endl;
+                valid = true;
+                return valid;
+            }
+        }
+    }
+    return valid;
+}
 
 void Zork::loadCurrentRoom(Room * room){
     cout << room->description << endl << endl;
@@ -443,10 +716,9 @@ void Zork::loadCurrentRoom(Room * room){
 
 /* James */
 void Zork::printInventory(void){
-    list<Item *>::iterator it;
+    map<string, Item *>::iterator it;
     cout << endl << "Inventory:" << endl;
-    for(it = inventry.begin(); it != inventry.end(); it++){
-        cout << "   " << (*it)->name << endl;
+    for(it = inventory.begin(); it != inventory.end(); it++){
+        cout << "   " << (it->second)->name << endl;
     }
-    cout << endl;
 }

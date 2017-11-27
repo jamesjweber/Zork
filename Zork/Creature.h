@@ -25,7 +25,7 @@ public:
 	string name;
 	//string status; - in game object
 	string description;
-	list<string> vulnerability;
+	set<string> vulnerability;
 
 	void attack();
 	void checkTriggers();

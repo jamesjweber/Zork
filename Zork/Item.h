@@ -36,6 +36,7 @@ public:
 
 	void setUp(xml_node<> *);
 	void turnOn(xml_node<> *);
+    void printWriting(void);
 
 };
 

@@ -28,7 +28,7 @@ public:
 	Command(xml_node<>* commandNode);
 	string command;
 	virtual ~Command();
-	virtual bool eval(string s);
+	virtual bool eval(Zork &z);
 };
 
 #endif /* ZORK_COMMAND_H_ */

@@ -26,15 +26,13 @@ public:
 	virtual ~Container();
 
 	string name;
-	//string status;  - inherited from GameObject
-	string description;
 	vector<string> accepts;
 	map<string, Item*> items;
-    //vector<Trigger> triggers;
 
     bool hasItem(string item);
     void checkTriggers();
     void checkAccept();
+    void printContainer();
 };
 
 #endif /* ZORK_CONTAINER_H_ */

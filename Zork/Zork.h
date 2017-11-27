@@ -44,14 +44,17 @@ public:
 	xml_node<> * setUpGame(string s);
     void makeMap(xml_node<> * mapNode);
 	void StartGame();
-	void checkTriggers();
+	bool checkTriggers(bool);
     bool evalInput(string, string);
     void parseAction(string);
     void getSibling(xml_node<>* root);
     void loadCurrentRoom(Room *);
     void getInput(void);
     void printInventory(void);
-
+    bool takeObj(string);
+    void evalAction(vector<string>);
+    void evalPrint(vector<string>);
+    vector<string> split(string);
 
 	Room* nodeToRoom(xml_node<>* roomNode);
 	Item* nodeToItem(xml_node<>* itemNode);
@@ -59,15 +62,13 @@ public:
 	Container* nodeToContainer(xml_node<>* containerNode);
 	Trigger* nodeToTrigger(xml_node<>* tiggerNode);
 
-
     xml_node<> * mapNode;
     map<string, xml_node<> *> room_xml;
     map<string, xml_node<> *> item_xml;
     map<string, xml_node<> *> container_xml;
     map<string, xml_node<> *> creature_xml;
     //map<string, Room *> roomObj;
-    list<string> inputs;
-    list<Item *> inventry;
+    vector<string> inputs;
 
     map<string, GameObject*> gameObjects; //Map all game objects
     map<string, Room*> roomObjs;
