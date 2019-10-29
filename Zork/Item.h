@@ -13,13 +13,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "GameObject.h"
 
 #include <stdio.h>
 
 using namespace std;
 using namespace rapidxml;
 
-class Item {
+class Item : public GameObject{
 public:
 	Item();
 	Item(xml_node<>* node);
@@ -28,13 +29,14 @@ public:
 	string name; //Item name
 	string description; //Item description
 	string writing; //writing
-	string status;
+	//string status;
 
 	vector<string> onMessages; //Messages when the item is used
 	vector<string> turnOnActions; //Actions available for the item
 
 	void setUp(xml_node<> *);
 	void turnOn(xml_node<> *);
+    void printWriting(void);
 
 };
 

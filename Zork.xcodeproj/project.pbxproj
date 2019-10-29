@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19693AD81FCB691C00F4A85A /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19693AD41FCB691900F4A85A /* Command.cpp */; };
+		19693AD91FCB691C00F4A85A /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19693AD61FCB691B00F4A85A /* GameObject.cpp */; };
 		19A4E93C1FC5598B00E54770 /* OwnerCondition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9351FC5598900E54770 /* OwnerCondition.cpp */; };
 		19A4E93D1FC5598B00E54770 /* Condition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9361FC5598A00E54770 /* Condition.cpp */; };
 		19A4E93E1FC5598B00E54770 /* Trigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19A4E9381FC5598A00E54770 /* Trigger.cpp */; };
@@ -33,6 +35,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		19693AD41FCB691900F4A85A /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Command.cpp; sourceTree = "<group>"; };
+		19693AD51FCB691A00F4A85A /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
+		19693AD61FCB691B00F4A85A /* GameObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameObject.cpp; sourceTree = "<group>"; };
+		19693AD71FCB691B00F4A85A /* GameObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameObject.h; sourceTree = "<group>"; };
 		19A4E9341FC5598900E54770 /* Condition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Condition.h; sourceTree = "<group>"; };
 		19A4E9351FC5598900E54770 /* OwnerCondition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OwnerCondition.cpp; sourceTree = "<group>"; };
 		19A4E9361FC5598A00E54770 /* Condition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Condition.cpp; sourceTree = "<group>"; };
@@ -91,6 +97,10 @@
 		19DC135D1F7BFF2600E154FC /* Zork */ = {
 			isa = PBXGroup;
 			children = (
+				19693AD41FCB691900F4A85A /* Command.cpp */,
+				19693AD51FCB691A00F4A85A /* Command.h */,
+				19693AD61FCB691B00F4A85A /* GameObject.cpp */,
+				19693AD71FCB691B00F4A85A /* GameObject.h */,
 				19D0D9671FAE843600B81844 /* Borders.cpp */,
 				19D0D9731FAE843800B81844 /* Borders.h */,
 				19A4E9361FC5598A00E54770 /* Condition.cpp */,
@@ -179,11 +189,13 @@
 			files = (
 				19D0D9881FAF9FC900B81844 /* Creature.cpp in Sources */,
 				19D0D97B1FAE843800B81844 /* Item.cpp in Sources */,
+				19693AD91FCB691C00F4A85A /* GameObject.cpp in Sources */,
 				19A4E93D1FC5598B00E54770 /* Condition.cpp in Sources */,
 				19D0D97D1FAE843800B81844 /* Room.cpp in Sources */,
 				19D0D97E1FAE843800B81844 /* main.cpp in Sources */,
 				19D0D97A1FAE843800B81844 /* Borders.cpp in Sources */,
 				19A4E93C1FC5598B00E54770 /* OwnerCondition.cpp in Sources */,
+				19693AD81FCB691C00F4A85A /* Command.cpp in Sources */,
 				19D0D97F1FAE843800B81844 /* zork.cpp in Sources */,
 				19D0D9851FAF6FBD00B81844 /* Container.cpp in Sources */,
 				19A4E93E1FC5598B00E54770 /* Trigger.cpp in Sources */,

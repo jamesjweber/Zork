@@ -22,6 +22,7 @@ class Creature; */
 #include <queue>
 #include <vector>
 #include "Room.h"
+#include "GameObject.h"
 
 using namespace std;
 using namespace rapidxml;
@@ -32,6 +33,8 @@ public:
 	virtual ~Zork();
 
 	string userInput;
+	Room* currentRoom;
+	map<string, Item*> inventory;
 	/* map<string, Item*> inventory;
 	map<string, Item*> items;
 	map<string , Room*> rooms;
@@ -41,31 +44,38 @@ public:
 	xml_node<> * setUpGame(string s);
     void makeMap(xml_node<> * mapNode);
 	void StartGame();
-	void checkTriggers();
-	bool evalInput(list<string> input);
-	void parseAction(string);
-	void getSibling(xml_node<>* root);
+	bool checkTriggers(bool);
+    bool evalInput(string, string);
+    void parseAction(string);
+    void getSibling(xml_node<>* root);
     void loadCurrentRoom(Room *);
     void getInput(void);
     void printInventory(void);
+    bool takeObj(string);
+    void evalAction(vector<string>);
+    void evalPrint(vector<string>);
+    vector<string> split(string);
 
 	Room* nodeToRoom(xml_node<>* roomNode);
 	Item* nodeToItem(xml_node<>* itemNode);
 	Creature* nodeToCreature(xml_node<>* creatureNode);
 	Container* nodeToContainer(xml_node<>* containerNode);
-	//Trigger* nodeToTrigger(xml_node<>* tiggerNode);
+	Trigger* nodeToTrigger(xml_node<>* tiggerNode);
 
-
-private:
     xml_node<> * mapNode;
-    map<string, xml_node<> *> room;
-    map<string, xml_node<> *> item;
-    map<string, xml_node<> *> container;
-    map<string, xml_node<> *> creature;
-    list<Room *> roomObj;
-    list<string> inputs;
-    list<string> inventory;
-    Room * currentRoom;
+    map<string, xml_node<> *> room_xml;
+    map<string, xml_node<> *> item_xml;
+    map<string, xml_node<> *> container_xml;
+    map<string, xml_node<> *> creature_xml;
+    //map<string, Room *> roomObj;
+    vector<string> inputs;
+
+    map<string, GameObject*> gameObjects; //Map all game objects
+    map<string, Room*> roomObjs;
+    map<string, Container*> containerObjs;
+    vector<Creature*> creatureObjs;
+    vector<Item*> itemObjs;
+
 };
 
 #endif /* ZORK_H_ */

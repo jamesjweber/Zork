@@ -16,7 +16,7 @@ Condition::~Condition() {
 	// TODO Auto-generated destructor stub
 }
 Condition::Condition(xml_node<>* conditionNode){
-
+	s = "";
 }
 
 

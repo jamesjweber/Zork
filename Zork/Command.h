@@ -15,6 +15,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 using namespace rapidxml;
@@ -27,7 +28,7 @@ public:
 	Command(xml_node<>* commandNode);
 	string command;
 	virtual ~Command();
-	virtual bool eval(Zork& z);
+	virtual bool eval(Zork &z);
 };
 
 #endif /* ZORK_COMMAND_H_ */

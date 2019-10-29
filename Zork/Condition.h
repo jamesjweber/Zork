@@ -11,20 +11,21 @@
 #include "rapidxml.hpp"
 #include <map>
 #include <string>
-#include "Zork.h"
+//#include "Zork.h"
 
 using namespace rapidxml;
 using namespace std;
+
+class Zork;
 
 class Condition {
 public:
 	Condition();
 	Condition(xml_node<>* conditionNode);
 	string s = "";
-	//Zork z;
 
 	virtual ~Condition();
-	//virtual bool eval(string s, Zork& z);
+	virtual bool eval(Zork& z) = 0;
 };
 
 #endif /* ZORK_CONDITION_H_ */
